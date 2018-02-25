@@ -1,3 +1,6 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 let index = 0;
 let answers = []
 const jsonX = JSON.parse('{"0":{"0":"Mars","1":"Earth","2":"Venus","3": "Jupiter", "question":"What is the 3rd rock from the sun?","correct":"1"},"1":{"0":"A smudge on the Hubble telescope","1":"A storm on Jupiter","2":"A storm on Saturn","3":"Extremely hot spot on the Suns surface","question":"What is the Great Red Spot?","correct":"1"},"2":{"0":"Mars","1":"Mercury","2":"Venus","3":"Neptun","question":"Which planet has rings?","correct":"3"},"title":"Astronomy"}');
@@ -56,6 +59,7 @@ function buildQuestion(questionCount, json) {
 	</div>	
 	);
 }
+
 function getScore() {
 	let score = 0;
 	for (let i = 0; i < Object.keys(jsonX).length - 1; i++) {
@@ -63,6 +67,7 @@ function getScore() {
 	}
 	return score;
 }
+
 function summary() {
 	return (
 		<div className="score-field">
@@ -89,4 +94,3 @@ function saveAnswer(questionCount) {
 	console.log(answers);
 }
 
-nextQuestion(jsonX);
