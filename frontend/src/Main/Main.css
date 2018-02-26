@@ -7,7 +7,7 @@ body {
   margin-top: 0;
   font-family: 'Open Sans', sans-serif;
 }
-.title {
+.main-title {
     letter-spacing: 5px;
     font-weight: bold;
     font-size: 50px;
@@ -63,11 +63,12 @@ body {
 #login:active {
     font-weight: bold;
 }
-.error {
-  float: left;
+#error {
+    float: left;
     margin-left: 9%;
     font-size: 13px;
     letter-spacing: 1px;
     margin-top: 5px;
     color: crimson;
+    display: none;
 }

@@ -6,7 +6,7 @@ export default class ToQuiz extends Component {
   
   displayQuiz(event) {
     event.preventDefault();
-    ReactDOM.render(<QuizPage data={this.props.data} name={this.props.name} />, document.getElementById('root'));
+    ReactDOM.render(<QuizPage data={this.props.data} name={this.props.name}/>, document.getElementById('root'));
   }
 
   render() {
