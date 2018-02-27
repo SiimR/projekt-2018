@@ -1,0 +1,11 @@
+ALTER TABLE quizzy.quiz ADD CONSTRAINT fk_quiz_user FOREIGN KEY (user_id)
+REFERENCES quizzy.user (user_id) MATCH SIMPLE
+ON UPDATE CASCADE ON DELETE NO ACTION;
+
+ALTER TABLE quizzy.question ADD CONSTRAINT fk_question_quiz FOREIGN KEY (quiz_id)
+REFERENCES quizzy.quiz (quiz_id) MATCH SIMPLE
+ON UPDATE CASCADE ON DELETE NO ACTION;
+
+ALTER TABLE quizzy.answer ADD CONSTRAINT fk_answer_question FOREIGN KEY (question_id)
+REFERENCES quizzy.question (question_id) MATCH SIMPLE
+ON UPDATE CASCADE ON DELETE NO ACTION;
