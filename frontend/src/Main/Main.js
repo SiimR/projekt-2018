@@ -31,7 +31,6 @@ export default class Main extends Component {
       }).catch(error => {
         document.getElementById("error").style.display = "block";
       })
-
   }
 
   render() {

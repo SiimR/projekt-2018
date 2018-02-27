@@ -6,13 +6,19 @@ export default class QuizPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0
+      count: 0,
+      answers: []
     };
   }
 
-  getIndex(){
+  getIndex() {
     return this.state.count;
   }
+
+  getAnswers() {
+    return this.state.answers;
+  }
+
   updateIndex(){
     this.setState({ count: this.state.count + 1 })
     console.log(this.state)
@@ -24,7 +30,7 @@ nextQuestion() {
   let answers = [];
   let nrOfQuestions = Object.keys(json).length - 1;
   if(this.getIndex() === 0 || this.isSelected()) {
-    this.saveAnswer(nrOfQuestions, answers, this.getIndex());
+    this.saveAnswer(nrOfQuestions, this.getAnswers(), this.getIndex());
     if (nrOfQuestions > this.getIndex()) {
       const elem2 = <p className="main"> {json.title} </p>
       const element = this.buildQuestion(Object.keys(json[this.getIndex()]).length - 2, json, this.getIndex());
@@ -37,7 +43,7 @@ nextQuestion() {
     } else {
       document.getElementById("submit-quize").style.display = "none";
       document.getElementById("home-button").style.display = "block";
-      const element = this.summary(answers);
+      const element = this.summary(this.getAnswers());
       ReactDOM.render(element, document.getElementById("display"));
     }
   } else {
@@ -101,7 +107,7 @@ buildQuestion(questionCount, json) {
     const json = JSON.parse(this.props.data);
     return (
       <div className="score-field">
-        Your final score: {this.getScore(answers)}/{Object.keys(json).length - 1}
+        {this.props.username}, you answered {this.getScore(answers)} out of {Object.keys(json).length - 1} questions correct!
       </div>
     );
   }
@@ -132,7 +138,7 @@ buildQuestion(questionCount, json) {
             
         </div>
         <button id="submit-quize" className="buttona" onClick={() => {this.nextQuestion()}}>Next</button>
-        <button id="home-button" className="buttona" onClick={() => {window.location.reload()}} style={{display: "none"}}>Retry!</button>
+        <button id="home-button" className="buttona" onClick={() => {window.location.reload()}} style={{display: "none"}}>Home!</button>
       </div>
     );
   }
