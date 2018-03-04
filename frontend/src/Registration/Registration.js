@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './LogIn.css';
-import Registration from '../Registration/Registration.js';
+import './Registration.css';
 
 
-export default class LogIn extends Component {
-	registration() {
-		ReactDOM.render(<Registration/>, document.getElementById('root'));
-	}
+export default class Registration extends Component {
 	render() {
 	    return (
 	      <div className="wrapper">
@@ -16,10 +12,9 @@ export default class LogIn extends Component {
 	        <form className="search-form">
 	          <input type="email" name="quiz-id" placeholder="Email" className="search-input" required />
 	          <input type="password" name="quiz-id" placeholder="Password" className="search-input" required />
-	          <input type="submit"  name="submit" value="Log In" id="submit-button" />
+	          <input type="password" name="quiz-id" placeholder="Re-enter Password" className="search-input" required />
+	          <input type="submit"  name="submit" value="Register" id="submit-button" />
 	        </form>
-	        <p className="create-account">Don't have an account?</p>
-	        <button className="register-button" onClick={this.registration} >Register account!</button>
 	      </div>
 	    );
   	}

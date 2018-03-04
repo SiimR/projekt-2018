@@ -21,7 +21,7 @@ export default class Main extends Component {
   }
 
   loginPage() {
-    ReactDOM.render(<LogIn css={"import './LogIn.css';"} />, document.getElementById('root'));
+    ReactDOM.render(<LogIn/>, document.getElementById('root'));
   }
 
   handlePost(event) {

@@ -17,7 +17,6 @@ body {
     margin: 17% auto 0 auto;
     position: relative;
     top: 20px;
-    transition: 1s;
 }
 .search-form {
   margin: 5% auto 0 auto;
