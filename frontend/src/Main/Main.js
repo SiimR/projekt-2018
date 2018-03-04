@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './Main.css';
 import ToQuiz from '../ToQuiz/ToQuiz.js';
+import LogIn from '../LogIn/LogIn.js';
 import axios from 'axios';
 
 export default class Main extends Component {
@@ -17,6 +18,10 @@ export default class Main extends Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
+  }
+
+  loginPage() {
+    ReactDOM.render(<LogIn css={"import './LogIn.css';"} />, document.getElementById('root'));
   }
 
   handlePost(event) {
@@ -42,7 +47,7 @@ export default class Main extends Component {
           <span id="error">Couldn't find it, mate!</span>
           <input type="submit"  name="submit" value="Find!" id="submit-button" />
         </form>
-        <a id="login">Make your own quiz</a>
+        <div className="login-wrapper" onClick={this.loginPage}><a id="login">Make your own quiz</a></div>
       </div>
     );
   }

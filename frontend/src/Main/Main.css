@@ -17,6 +17,7 @@ body {
     margin: 17% auto 0 auto;
     position: relative;
     top: 20px;
+    transition: 1s;
 }
 .search-form {
   margin: 5% auto 0 auto;
@@ -30,6 +31,7 @@ body {
     border: 2px solid #6b92c8;
     width: 75%;
     margin-left: 5.5%;
+    margin-bottom: 5%;
 }
 #submit-button {
     float: left;
@@ -48,12 +50,8 @@ body {
   background-color: #88a5ce;
 }
 #login {
-    text-align: center;
     letter-spacing: 1px;
     color: #a5a5a5;
-    margin-left: 40%;
-    margin-top: 20%;
-    float: left;
 }
 #login:hover {
     cursor: pointer;
@@ -71,4 +69,9 @@ body {
     margin-top: 5px;
     color: crimson;
     display: none;
+}
+
+.login-wrapper {
+    margin-top: 25%;
+    text-align: center;
 }
