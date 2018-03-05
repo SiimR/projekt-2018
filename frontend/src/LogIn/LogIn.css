@@ -1,0 +1,22 @@
+.create-account {
+	margin-top: 20%;
+    text-align: center;
+    letter-spacing: 1px;
+    color: #6b92c8ba;
+    font-weight: bold;
+}
+
+.register-button {
+	margin-left: 41%;
+    border-radius: 5px;
+    border: none;
+    padding: 8px 15px;
+    letter-spacing: 2px;
+    color: #a7a7a7;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.register-button:hover {
+	background-color: #cecece;
+}
