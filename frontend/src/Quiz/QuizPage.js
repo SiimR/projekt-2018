@@ -87,15 +87,15 @@ export default class QuizPage extends Component {
     const notification = <p id="notify">Choose an answer!</p>
     if (document.getElementById("notify")) {
       ReactDOM.render(notification, document.getElementById("notify-div"));
-    } else {
+    } else if (document.getElementById("notify-div")) {
       ReactDOM.render("", document.getElementById("notify-div"));
     }
   }
 
   buildQuestion() {
-    let elements = [];
+    let answersToQuestions = [];
     for (let index = 0; index < this.getCurrentQuestoinAnswerCount(); index++) {
-      elements.push(
+      answersToQuestions.push(
         <div key={String(this.getAnsweredQuestionCount()) + index}>
           <input id={"input-" + index} name="option" className="answer" type="radio" />
           {this.getJson()[this.getAnsweredQuestionCount()]["answers"][index]["content"]} 
@@ -108,7 +108,7 @@ export default class QuizPage extends Component {
         <div className="quiz-field">
           <div className="question-nr">{this.getAnsweredQuestionCount() + 1}/{this.getJson().length}</div>
           <div className="question">{this.getJson()[this.getAnsweredQuestionCount()].content}</div>
-          {elements}
+          {answersToQuestions}
         </div>
         <div id="notify-div"></div>
       </div>  
@@ -133,6 +133,7 @@ export default class QuizPage extends Component {
   }
 
   componentDidMount() {
+    console.log(this.isReadyForQuestion());
     this.handleQuestions();
   }
 
