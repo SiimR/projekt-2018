@@ -26,13 +26,16 @@ export default class Main extends Component {
 
   handlePost(event) {
     event.preventDefault();
-    let url = '//api.jsonbin.io/b/' + this.state.value;
+    let url = 'http://localhost:8082/quizzifly/api/quizzes/' + this.state.value;
     axios.get(url)
       .then(response => {
-        const recivedData = JSON.stringify(response.data);
-        const name = response.data["title"];
-        console.log(recivedData);
-        ReactDOM.render(<ToQuiz data={recivedData} name={name} />, document.getElementById('root'));
+        if (response.data["name"]) {
+          const recivedData = JSON.stringify(response.data["questions"]);
+          const name = response.data["name"];
+          ReactDOM.render(<ToQuiz data={recivedData} name={name} />, document.getElementById('root'));
+        } else {
+          document.getElementById("error").style.display = "block";
+        }
       }).catch(error => {
         document.getElementById("error").style.display = "block";
       })

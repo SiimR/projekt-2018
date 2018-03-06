@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import './Registration.css';
-
 
 export default class Registration extends Component {
 	render() {
