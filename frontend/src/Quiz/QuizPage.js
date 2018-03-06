@@ -1,132 +1,139 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './QuizPage.css';
+import Summary from '../Summary/Summary.js';
 
 export default class QuizPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       count: 0,
-      answers: []
+      answers: [],
+      json: JSON.parse(this.props.data)
     };
   }
 
-  getIndex() {
+  getAnsweredQuestionCount() {
     return this.state.count;
   }
 
   getAnswers() {
     return this.state.answers;
   }
+  getJson() {
+    return this.state.json;
+  }
+  getCurrentQuestoinAnswerCount() {
+    return this.state.json[this.state.count]["answers"]["length"];
+  }
 
-  updateIndex(){
+  updateIndex() {
     this.setState({ count: this.state.count + 1 })
-    console.log(this.state)
   }
 
-nextQuestion() {
-  console.log(this.getIndex());
-  const json = JSON.parse(this.props.data);
-  let answers = [];
-  let nrOfQuestions = Object.keys(json).length - 1;
-  if(this.getIndex() === 0 || this.isSelected()) {
-    this.saveAnswer(nrOfQuestions, this.getAnswers(), this.getIndex());
-    if (nrOfQuestions > this.getIndex()) {
-      const elem2 = <p className="main"> {json.title} </p>
-      const element = this.buildQuestion(Object.keys(json[this.getIndex()]).length - 2, json, this.getIndex());
-
-      ReactDOM.render(elem2, document.getElementById("quiz-name"));
-      ReactDOM.render(element, document.getElementById("display"));
-
-      this.handleNotification;
-      this.updateIndex();
+  handleQuestions() {
+    if(this.isReadyForQuestion()) {
+      this.saveAnswer();
+      if (this.isQuestionUnanswered()) {
+        this.displayNextQuestion();
+      } else {
+        this.displaySummary();
+      }
     } else {
-      document.getElementById("submit-quize").style.display = "none";
-      document.getElementById("home-button").style.display = "block";
-      const element = this.summary(this.getAnswers());
-      ReactDOM.render(element, document.getElementById("display"));
+      this.inputNotSelectedNotification();
     }
-  } else {
-    this.handleNotification;
   }
-}
 
-componentDidMount() {
-  this.nextQuestion();
-}
+  isReadyForQuestion() {
+    return this.getAnsweredQuestionCount() === 0 || this.isInputSelected();
+  }
 
-isSelected() {
-  let int = 0; 
-  while (true) {
-    if (!document.getElementById("input-" + int)) break;
-    if (document.getElementById("input-" + int).checked) {
-      return true;
+  isInputSelected() {
+    let int = 0; 
+    while (true) {
+      if (!document.getElementById("input-" + int)) break;
+      if (document.getElementById("input-" + int).checked) {
+        return true;
+      }
+      int++;
     }
-    int++;
-  }
-  return false;
-}
-
-handleNotification() {
-  const notification = <p id="notify">Choose an answer!</p>
-  if (document.getElementById("notify")) {
-    ReactDOM.render(notification, document.getElementById("notify-div"));
-  } else {
-    ReactDOM.render("", document.getElementById("notify-div"));
-  }
-}
-
-buildQuestion(questionCount, json) {
-  
-  let elements = [];
-  for (let i = 0; i < questionCount; i++) {
-    elements.push(<div key={String(this.getIndex()) + i}><input id={"input-" + i} name="option" className="answer" type="radio" value={json[this.getIndex()][{i}]} /> {json[this.getIndex()][i]} <br /></div>);
-  }
-  return (
-    <div>
-      <div className="quiz-field">
-        <div className="question-nr">{this.getIndex() + 1}/{Object.keys(json).length - 1}</div>
-        <div className="question">{json[this.getIndex()].question}</div>
-        {elements}
-      </div>
-      <div id="notify-div"></div>
-    </div>  
-    );
+    return false;
   }
 
-  getScore(answers) {
-    let score = 0;
-    const json = JSON.parse(this.props.data);
-    for (let i = 0; i < Object.keys(json).length - 1; i++) {
-      if (json[i]["correct"] === answers[i]) score++;
+  isQuestionUnanswered() {
+    return this.getJson().length > this.getAnsweredQuestionCount();
+  }
+
+  displayNextQuestion() {
+    const titleElement = <p className="main"> {this.getJson().title} </p>
+    const questionsElement = this.buildQuestion();
+
+    ReactDOM.render(titleElement, document.getElementById("quiz-name"));
+    ReactDOM.render(questionsElement, document.getElementById("display"));
+
+    this.inputNotSelectedNotification();
+    this.updateIndex();
+  }
+
+  displaySummary() {
+    document.getElementById("submit-quize").style.display = "none";
+    document.getElementById("home-button").style.display = "block";
+    const summaryElement = 
+      <Summary nickname={this.props.username} json={this.props.data} answers={this.state.answers} />;
+    ReactDOM.render(summaryElement, document.getElementById("display"));
+  }
+
+  inputNotSelectedNotification() {
+    const notification = <p id="notify">Choose an answer!</p>
+    if (document.getElementById("notify")) {
+      ReactDOM.render(notification, document.getElementById("notify-div"));
+    } else {
+      ReactDOM.render("", document.getElementById("notify-div"));
     }
-    return score;
   }
 
-  summary(answers) {
-    const json = JSON.parse(this.props.data);
+  buildQuestion() {
+    let elements = [];
+    for (let index = 0; index < this.getCurrentQuestoinAnswerCount(); index++) {
+      elements.push(
+        <div key={String(this.getAnsweredQuestionCount()) + index}>
+          <input id={"input-" + index} name="option" className="answer" type="radio" />
+          {this.getJson()[this.getAnsweredQuestionCount()]["answers"][index]["content"]} 
+          <br />
+        </div>
+      );
+    }
     return (
-      <div className="score-field">
-        {this.props.username}, you answered {this.getScore(answers)} out of {Object.keys(json).length - 1} questions correct!
-      </div>
-    );
-  }
+      <div>
+        <div className="quiz-field">
+          <div className="question-nr">{this.getAnsweredQuestionCount() + 1}/{this.getJson().length}</div>
+          <div className="question">{this.getJson()[this.getAnsweredQuestionCount()].content}</div>
+          {elements}
+        </div>
+        <div id="notify-div"></div>
+      </div>  
+      );
+    }
 
-  saveAnswer(questionCount, answers) {
-    if (this.getIndex() > 0 && questionCount !== answers.length) {
-      let int = 0;
+  saveAnswer() {
+    if (this.getAnsweredQuestionCount() > 0) {
+      let inputIndex = 0;
       while (true) {
-        let input = document.getElementById("input-" + int);
+        let input = document.getElementById("input-" + inputIndex);
         if (input) {
           if (input.checked) {
-            answers.push(input.id.slice(-1))
+            this.getAnswers().push(input.id.slice(-1))
           }
         } else {
           break;
         }
-        int++; 
+        inputIndex++; 
       }
     }
+  }
+
+  componentDidMount() {
+    this.handleQuestions();
   }
 
   render() {
@@ -137,7 +144,7 @@ buildQuestion(questionCount, json) {
         <div id="display">
             
         </div>
-        <button id="submit-quize" className="buttona" onClick={() => {this.nextQuestion()}}>Next</button>
+        <button id="submit-quize" className="buttona" onClick={() => {this.handleQuestions()}}>Next</button>
         <button id="home-button" className="buttona" onClick={() => {window.location.reload()}} style={{display: "none"}}>Home!</button>
       </div>
     );

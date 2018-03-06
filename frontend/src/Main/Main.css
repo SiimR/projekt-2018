@@ -74,3 +74,10 @@ body {
     margin-top: 25%;
     text-align: center;
 }
+.requirement {
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #8a8a8a;
+    margin-left: 7%;
+    margin-top: -4%;
+}
