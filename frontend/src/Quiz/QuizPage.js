@@ -133,7 +133,6 @@ export default class QuizPage extends Component {
   }
 
   componentDidMount() {
-    console.log(this.isReadyForQuestion());
     this.handleQuestions();
   }
 
