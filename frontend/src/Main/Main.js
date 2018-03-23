@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './Main.css';
+import './MainExtra.css';
 import ToQuiz from '../ToQuiz/ToQuiz.js';
 import LogIn from '../LogIn/LogIn.js';
 import axios from 'axios';
@@ -18,10 +19,6 @@ export default class Main extends Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
-  }
-
-  loginPage() {
-    ReactDOM.render(<LogIn/>, document.getElementById('root'));
   }
 
   handlePost(event) {
@@ -44,13 +41,13 @@ export default class Main extends Component {
   render() {
     return (
       <div className="wrapper">
-        <h1 className="main-title">QUIZZIFLY</h1>
-        <form className="search-form" onSubmit={this.handlePost} >
-          <input type="text" name="quiz-id" onChange={this.handleChange} placeholder="Enter quiz ID" className="search-input" />
+        <h1 className="main-title title-ex">QUIZZIFLY</h1>
+        <form className="search-form form-ex" onSubmit={this.handlePost} >
+          <input type="text" name="quiz-id" onChange={this.handleChange} placeholder="Enter quiz ID" className="search-input increase-margin" />
           <span id="error">Couldn't find it, mate!</span>
           <input type="submit"  name="submit" value="Find!" id="submit-button" />
         </form>
-        <div className="login-wrapper" onClick={this.loginPage}><a id="login">Make your own quiz</a></div>
+        <button className="make-quiz-button">Quize maker</button>
       </div>
     );
   }

@@ -1,22 +1,49 @@
 .create-account {
-	margin-top: 20%;
+	margin-top: 15%;
     text-align: center;
     letter-spacing: 1px;
-    color: #6b92c8ba;
+    color: #68b0ff;
     font-weight: bold;
+    width: 98%;
 }
 
 .register-button {
-	margin-left: 41%;
+	margin-left: 40%;
     border-radius: 5px;
-    border: none;
     padding: 8px 15px;
     letter-spacing: 2px;
-    color: #a7a7a7;
+    color: #68b0ff;
     font-weight: bold;
     cursor: pointer;
+    background-color: white;
+    border: 1px solid;
 }
 
 .register-button:hover {
-	background-color: #cecece;
+	background-color: #f7f9ff;
+}
+.moto {
+    margin: 2% -6% -1% 0;
+    text-align: center;
+    letter-spacing: 2px;
+    color: grey;
+    font-style: italic;
+}
+
+.register {
+    margin-left: 30% !important;
+    margin-top: 16% !important;
+    margin-bottom: -29% !important;
+}
+
+.ppp {
+    color: grey;
+    text-align: center;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-top: 0%;
+    letter-spacing: 2px;
+    font-size: 14px;
+    margin-left: 33%;
 }
