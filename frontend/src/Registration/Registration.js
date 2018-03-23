@@ -10,8 +10,9 @@ export default class Registration extends Component {
 	          <input type="email" name="quiz-id" placeholder="Email" className="search-input" required />
 	          <input type="password" name="quiz-id" placeholder="Password" className="search-input" required />
 	          <input type="password" name="quiz-id" placeholder="Re-enter Password" className="search-input" required />
-	          <input type="submit"  name="submit" value="Register" id="submit-button" />
+	          <input type="submit"  name="submit" value="Register" id="submit-button" className="register" />
 	        </form>
+	        <p className="ppp">Password must be at least 6 charaters!</p>
 	      </div>
 	    );
   	}
