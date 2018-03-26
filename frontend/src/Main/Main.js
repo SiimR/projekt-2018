@@ -11,7 +11,9 @@ export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      value: '',
+      quizMaker: true,
+      takeQuiz: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handlePost = this.handlePost.bind(this);
@@ -42,12 +44,17 @@ export default class Main extends Component {
     return (
       <div className="wrapper">
         <h1 className="main-title title-ex">QUIZZIFLY</h1>
-        <form className="search-form form-ex" onSubmit={this.handlePost} >
-          <input type="text" name="quiz-id" onChange={this.handleChange} placeholder="Enter quiz ID" className="search-input increase-margin" />
-          <span id="error">Couldn't find it, mate!</span>
-          <input type="submit"  name="submit" value="Find!" id="submit-button" />
-        </form>
-        <button className="make-quiz-button">Quize maker</button>
+        <div className="top-nav">
+          <button className="make-quiz-button quiz-transition-button">Take a quiz</button>
+          <button className="make-quiz-button">Make a quiz</button>
+        </div>
+        <div>
+          <form className="search-form form-ex" onSubmit={this.handlePost} >
+            <input type="text" name="quiz-id" onChange={this.handleChange} placeholder="Enter quiz ID" className="search-input increase-margin" />
+            <span id="error">Couldn't find it, mate!</span>
+            <input type="submit"  name="submit" value="Find!" id="submit-button" />
+          </form>
+        </div>
       </div>
     );
   }
