@@ -1,0 +1,20 @@
+.title_quiz2 {
+    padding: 20px;
+    letter-spacing: 5px;
+    font-weight: bold;
+    font-size: 40px;
+    text-shadow: -1px 0 #c8202f, 0 1px #c8202f, 1px 0 #c8202f, 0 -1px #c8202f;
+    color: #c8202f;
+    margin: 0% auto 0 auto;
+    text-align: center;
+}
+
+.answer {
+    padding: 10px;
+    border-radius: 8px;
+    letter-spacing: 1px;
+    border: 2px solid #6b92c8;
+    width: 75%;
+    margin-left: 5.5%;
+    margin-bottom: 3%;
+}
