@@ -24,7 +24,7 @@ public class QuizService {
 		
 		return QuizModel.builder()
 				.id(entity.getQuizId())
-				.userId(entity.getUserId())
+				.userId(entity.getUser().getUserId())
 				.name(entity.getName())
 				.reference(entity.getReference())
 				.description(entity.getDescription())
