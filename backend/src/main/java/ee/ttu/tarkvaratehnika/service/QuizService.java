@@ -13,6 +13,8 @@ import ee.ttu.tarkvaratehnika.model.QuizModel;
 import static ee.ttu.tarkvaratehnika.service.QuestionService.QUESTION_ENTITY_TO_MODEL;
 import static java.util.stream.Collectors.toList;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class QuizService {
@@ -24,7 +26,7 @@ public class QuizService {
 		
 		return QuizModel.builder()
 				.id(entity.getQuizId())
-				.userId(entity.getUserId())
+				.userId(entity.getUser().getUserId())
 				.name(entity.getName())
 				.reference(entity.getReference())
 				.description(entity.getDescription())
@@ -42,6 +44,12 @@ public class QuizService {
 		QuizEntity quizEntity = quizRepository.findByReference(reference);
 		
 		return QUIZ_ENTITY_TO_MODEL.apply(quizEntity);
+	}
+	
+	public List<QuizModel> listUserRelated(Integer userId) {
+		return quizRepository.listUserRelated(userId).stream()
+				.map(QUIZ_ENTITY_TO_MODEL)
+				.collect(toList());
 	}
 	
 	@Autowired

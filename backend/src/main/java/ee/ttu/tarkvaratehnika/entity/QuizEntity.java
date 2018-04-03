@@ -16,11 +16,12 @@ public class QuizEntity {
 	@SequenceGenerator(name = "quiz_seq", sequenceName = "quiz_seq")
 	private Integer quizId;
 	
-	@Column(name = "user_id")
-	private Integer userId;
-	
 	@OneToMany(mappedBy = "quiz")
 	private List<QuestionEntity> questions;
+	
+	@ManyToOne()
+	@JoinColumn(name = "user_id", nullable = false)
+	private UserEntity user;
 	
 	@Column(name = "name")
 	private String name;
