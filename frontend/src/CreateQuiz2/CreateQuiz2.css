@@ -1,13 +1,12 @@
-.title {
+.title_quiz2 {
+    padding: 20px;
     letter-spacing: 5px;
     font-weight: bold;
-    font-size: 50px;
-    text-shadow: -1px 0 #6b92c8, 0 1px #6b92c8, 1px 0 #6b92c8, 0 -1px #6b92c8;
-    color: #6b92c8;
-    width: 100%;
+    font-size: 40px;
+    text-shadow: -1px 0 #c8202f, 0 1px #c8202f, 1px 0 #c8202f, 0 -1px #c8202f;
+    color: #c8202f;
     margin: 0% auto 0 auto;
     text-align: center;
-    top: 20px;
 }
 
 .answer {
