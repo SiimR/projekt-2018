@@ -2,10 +2,6 @@
 	margin: 4% auto 0 auto;
 }
 
-.form-ex {
-	margin: 14% auto 0 auto;
-}
-
 .make-quiz-button {
 	padding: 5px 10px 5px 10px;
     margin-right: 1%;
@@ -18,7 +14,11 @@
     color: #68b0ff;
     cursor: pointer;
     float: left;
-    transition: 1s;
+    transition: 0.5s;
+}
+
+.make-quiz-button:first-child {
+    margin-left: 15px;
 }
 
 [class="make-quiz-button"]:hover {
@@ -34,4 +34,5 @@
 .quiz-transition-button {
 	background-color: #68b0ff;
 	color: white;
+	cursor: context-menu;
 }
