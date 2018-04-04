@@ -4,8 +4,8 @@ import './index.css';
 import './index.js';
 import Main from './Main/Main';
 import registerServiceWorker from './registerServiceWorker';
+import CreateQuiz from './CreateQuiz/CreateQuiz.js'
+//import Survey from 'survey-react';
 
-
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+ReactDOM.render(<CreateQuiz />, document.getElementById('root'));
 registerServiceWorker();
