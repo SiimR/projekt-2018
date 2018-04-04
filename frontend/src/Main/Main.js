@@ -2,42 +2,36 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './Main.css';
 import './MainExtra.css';
-import ToQuiz from '../ToQuiz/ToQuiz.js';
 import LogIn from '../LogIn/LogIn.js';
-import axios from 'axios';
+import TakeQuiz from '../TakeQuiz/TakeQuiz.js';
+import UserQuizes from '../UserQuizes/UserQuizes.js';
 
 export default class Main extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
-      quizMaker: true,
-      takeQuiz: false
+      quizMaker: '',
+      takeQuiz: 'quiz-transition-button'
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handlePost = this.handlePost.bind(this);
+    this.changeView = this.changeView.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  changeView(element) {
+    if (this.state.quizMaker === '' && element.currentTarget.id === 'make') {
+      this.setState({quizMaker: 'quiz-transition-button'});
+      console.log(element.currentTarget.id);
+      this.setState({takeQuiz: ''});
+      ReactDOM.render(<UserQuizes />, document.getElementById('inner-root'));
+    } else if (this.state.takeQuiz === '' && element.currentTarget.id === 'take') {
+      this.setState({quizMaker: ''});
+      this.setState({takeQuiz: 'quiz-transition-button'});
+      ReactDOM.render(<TakeQuiz />, document.getElementById('inner-root'));
+    }
   }
 
-  handlePost(event) {
-    event.preventDefault();
-    let url = 'http://localhost:8082/quizzifly/api/quizzes/' + this.state.value;
-    axios.get(url)
-      .then(response => {
-        if (response.data["name"]) {
-          const recivedData = JSON.stringify(response.data["questions"]);
-          const name = response.data["name"];
-          ReactDOM.render(<ToQuiz data={recivedData} name={name} />, document.getElementById('root'));
-        } else {
-          document.getElementById("error").style.display = "block";
-        }
-      }).catch(error => {
-        document.getElementById("error").style.display = "block";
-      })
+  componentDidMount() {
+    ReactDOM.render(<TakeQuiz />, document.getElementById('inner-root'));
   }
 
   render() {
@@ -45,15 +39,18 @@ export default class Main extends Component {
       <div className="wrapper">
         <h1 className="main-title title-ex">QUIZZIFLY</h1>
         <div className="top-nav">
-          <button className="make-quiz-button quiz-transition-button">Take a quiz</button>
-          <button className="make-quiz-button">Make a quiz</button>
+            <button id="take" className={'make-quiz-button ' + this.state.takeQuiz} onClick={this.changeView}>
+              Take a quiz
+            </button>
+            <button id="make" className={'make-quiz-button ' + this.state.quizMaker} onClick={this.changeView}>
+              Make a quiz
+            </button>
+          <div className="user-name">
+            <span>{this.props.username}</span>
+            <span title="Log Out">X</span>
+          </div>
         </div>
-        <div>
-          <form className="search-form form-ex" onSubmit={this.handlePost} >
-            <input type="text" name="quiz-id" onChange={this.handleChange} placeholder="Enter quiz ID" className="search-input increase-margin" />
-            <span id="error">Couldn't find it, mate!</span>
-            <input type="submit"  name="submit" value="Find!" id="submit-button" />
-          </form>
+        <div id="inner-root">
         </div>
       </div>
     );

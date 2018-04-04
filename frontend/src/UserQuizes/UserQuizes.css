@@ -1,0 +1,21 @@
+#user-quizes {
+	margin: 0 auto;
+	margin-bottom: 7%;
+    margin-top: 5%;
+    border-collapse: collapse;
+}
+#user-quizes tr:first-child {
+	border-bottom: 1px solid #68b0ff;
+}
+
+.register-increase-margin {
+	margin-left: 50%;
+}
+
+#user-quizes tr th {
+	color: #68b0ff;
+    padding-left: 5%;
+    padding-right: 5%;
+    text-align: left;
+    width: 110px;
+}
