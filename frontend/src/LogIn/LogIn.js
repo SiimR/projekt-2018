@@ -35,7 +35,7 @@ export default class LogIn extends Component {
 		const hashedPassword = objectHash.MD5(this.state.password).toUpperCase();
 		axios.post('http://localhost:8082/quizzifly/api/users/login', {
 				name: this.state.username,
-		    	passwordHash: this.state.password,
+		    	passwordHash: hashedPassword,
 		  })
 		  .then(function (response) {
 		    ReactDOM.render(<Main username={response.data.name} userData={response.data} />, 
