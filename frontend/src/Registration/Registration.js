@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import objectHash from 'object-hash';
+import ReactDOM from 'react-dom';
+import LogIn from '../LogIn/LogIn.js';
+
 
 export default class Registration extends Component {
 	constructor(props) {
@@ -26,47 +30,46 @@ export default class Registration extends Component {
 		}
   	}
 
+  	updateErrorMessage(message) {
+  		document.getElementById("error-message").innerHTML = message;
+  		document.getElementById("error-message").style.color = "crimson";
+  	}
+
   	registerAccount(event) {
   		event.preventDefault();
-  		const errorMessageContainer = document.getElementById("error-message");
   		let password = this.state.password.replace(' ', '');
   		let rePassword = this.state.rePassword.replace(' ', '');
   		if (this.state.username.length <= 0 || this.state.email.length <= 0 
   			|| this.state.password.length <= 0 || this.state.rePassword.length <= 0) {
-  			errorMessageContainer.innerHTML = "Fill in all the fields!";
-  			errorMessageContainer.style.color = "crimson";
+  			this.updateErrorMessage("Fill in all the fields!");
+  		} else if (this.state.username.length < 3) {
+  			this.updateErrorMessage("Username must be at least 3 charaters!");
   		} else if (!(this.state.email.includes('@') && this.state.email.includes('.'))) {
-  			errorMessageContainer.innerHTML = "Incorrect email signature!";
-  			errorMessageContainer.style.color = "crimson";
+  			this.updateErrorMessage("Incorrect email signature!");
   		} else if (this.state.username.includes(' ')) {
-  			errorMessageContainer.innerHTML = "Username can't contain space(s)!";
-  			errorMessageContainer.style.color = "crimson";
+  			this.updateErrorMessage("Username can't contain space(s)!");
   		} else if (password.length <= 5 || rePassword.length <= 5) {
-  			errorMessageContainer.innerHTML = "Password must be at least 6 charaters!";
-  			errorMessageContainer.style.color = "crimson";
+  			this.updateErrorMessage("Password must be at least 6 charaters!");
   		} else if (rePassword !== password) {
-  			errorMessageContainer.innerHTML = "Password dosen't match!";
-  			errorMessageContainer.style.color = "crimson";
+  			this.updateErrorMessage("Password doesn't match!");
   		} else {
   			this.sendRegistrationData();
   		}
   	}
 
   	sendRegistrationData() {
-  		axios.post('url', {
-			data : {
-				username: this.state.username,
-				email: this.state.email,
-		    	password: this.state.password,
-			}
+  		axios.post('http://localhost:8082/quizzifly/api/users/register', {
+			name: this.state.username,
+			email: this.state.email,
+	    	passwordHash: objectHash.MD5(this.state.password).toUpperCase(),
 		  })
 		  .then(function (response) {
-		    console.log(response);
+		    ReactDOM.render(<LogIn />, document.getElementById('root'));
 		  })
 		  .catch(function (error) {
-		  	console.log("hei!");
-		  	//ReactDOM.render(<Main username={username} />, document.getElementById('root'));
-		  });
+		  	console.log(error);
+		  	this.updateErrorMessage("Something went wrong... Account not registerd!");
+		  }.bind(this));
   	}
 
 	render() {

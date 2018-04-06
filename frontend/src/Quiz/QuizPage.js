@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './QuizPage.css';
 import Summary from '../Summary/Summary.js';
+import Main from '../Main/Main.js';
 
 export default class QuizPage extends Component {
   constructor(props) {
@@ -132,6 +133,11 @@ export default class QuizPage extends Component {
     }
   }
 
+  home() {
+    ReactDOM.render(<Main username={this.props.username} userData={this.props.userData} />, 
+      document.getElementById("root"));
+  }
+
   componentDidMount() {
     this.handleQuestions();
   }
@@ -145,7 +151,7 @@ export default class QuizPage extends Component {
             
         </div>
         <button id="submit-quize" className="buttona" onClick={() => {this.handleQuestions()}}>Next</button>
-        <button id="home-button" className="buttona" onClick={() => {window.location.reload()}} style={{display: "none"}}>Home!</button>
+        <button id="home-button" className="buttona" onClick={() => {this.home()}} style={{display: "none"}}>Home!</button>
       </div>
     );
   }

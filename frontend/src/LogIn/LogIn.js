@@ -5,6 +5,7 @@ import '../Main/Main.css';
 import Main from '../Main/Main.js';
 import Registration from '../Registration/Registration.js';
 import axios from 'axios';
+import objectHash from 'object-hash';
 
 export default class LogIn extends Component {
 
@@ -25,25 +26,24 @@ export default class LogIn extends Component {
 	handleChange(event) {
 		if (event.target.type === 'text') {
     		this.setState({username: event.target.value});
-    		console.log(this.state.username);
 		} else if (event.target.type === 'password') {
     		this.setState({password: event.target.value});
 		}
   	}
 	
 	sendLogInData() {
-		axios.post('url', {
-			data : {
-				username: this.state.username,
-		    	password: this.state.password,
-			}
+		const hashedPassword = objectHash.MD5(this.state.password).toUpperCase();
+		axios.post('http://localhost:8082/quizzifly/api/users/login', {
+				name: this.state.username,
+		    	passwordHash: this.state.password,
 		  })
 		  .then(function (response) {
-		    console.log(response);
+		    ReactDOM.render(<Main username={response.data.name} userData={response.data} />, 
+		  		document.getElementById('root'));
 		  })
 		  .catch(function (error) {
+		  	console.log(this.state.password);
 		  	this.displayError("Wrong username or password!");
-		  	ReactDOM.render(<Main username={this.state.username} />, document.getElementById('root'));
 		  }.bind(this));
 	}
 

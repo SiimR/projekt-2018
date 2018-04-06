@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import ToQuiz from '../ToQuiz/ToQuiz.js';
+import QuizPage from '../Quiz/QuizPage.js';
 import axios from 'axios';
 
 
@@ -26,8 +26,9 @@ export default class TakeQuiz extends Component {
       .then(response => {
         if (response.data["name"]) {
           const recivedData = JSON.stringify(response.data["questions"]);
-          const name = response.data["name"];
-          ReactDOM.render(<ToQuiz data={recivedData} name={name} />, document.getElementById('root'));
+          const quizName = response.data["name"];
+          ReactDOM.render(<QuizPage data={recivedData} quizName={quizName} userData={this.props.userData} username={this.props.username}  />,
+            document.getElementById('root'));
         } else {
           document.getElementById("error").style.display = "block";
         }
