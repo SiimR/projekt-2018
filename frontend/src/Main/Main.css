@@ -3,7 +3,6 @@
   height: 530px;
   margin: 0 auto;
 }
-
 body {
   margin-top: 0;
   font-family: 'Open Sans', sans-serif;
@@ -33,7 +32,6 @@ body {
     margin-left: 5.5%;
     margin-bottom: 5%;
 }
-
 #submit-button {
     float: left;
     margin-top: 7%;
@@ -76,12 +74,6 @@ body {
     margin-top: 25%;
     text-align: center;
 }
-
-.makequiz-wrapper {
-    margin-top: 0%;
-    text-align: center;
-}
-
 .requirement {
     font-size: 13px;
     letter-spacing: 1px;

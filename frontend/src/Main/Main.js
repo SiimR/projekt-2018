@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import './Main.css';
 import ToQuiz from '../ToQuiz/ToQuiz.js';
 import LogIn from '../LogIn/LogIn.js';
-import CreateQuiz from '../CreateQuiz/CreateQuiz.js';
-import CreateQuiz2 from '../CreateQuiz2/CreateQuiz2.js';
 import axios from 'axios';
 
 export default class Main extends Component {
@@ -25,14 +23,6 @@ export default class Main extends Component {
   loginPage() {
     ReactDOM.render(<LogIn/>, document.getElementById('root'));
   }
-
-  createQuizPage() {
-      ReactDOM.render(<CreateQuiz/>, document.getElementById('root'));
-  }
-
-  createQuiz2Page() {
-        ReactDOM.render(<CreateQuiz2/>, document.getElementById('root'));
-    }
 
   handlePost(event) {
     event.preventDefault();
@@ -60,9 +50,7 @@ export default class Main extends Component {
           <span id="error">Couldn't find it, mate!</span>
           <input type="submit"  name="submit" value="Find!" id="submit-button" />
         </form>
-          <div className="login-wrapper" onClick={this.loginPage}><a id="login"><i>Make your own quiz</i> (login)</a></div>
-          <div className="makequiz-wrapper" onClick={this.createQuizPage}><a id="login">Create a new quiz</a></div>
-          <div className="makequiz-wrapper" onClick={this.createQuiz2Page}><a id="login">Create a new quiz2</a></div>
+        <div className="login-wrapper" onClick={this.loginPage}><a id="login">Make your own quiz</a></div>
       </div>
     );
   }
