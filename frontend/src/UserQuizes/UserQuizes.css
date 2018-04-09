@@ -61,7 +61,7 @@
 }
 
 .header {
-	width: 300px;
+	width: 80%;
     margin: 0 auto;
     margin-top: 7%;
     color: grey;
@@ -69,5 +69,11 @@
 }
 
 .header span {
-	margin-left: 21%;
+	margin-left: 22.5%;
+}
+
+.quiz-wrapper {
+	width: fit-content;
+    margin: 0 auto;
+    margin-top: 7%;
 }
