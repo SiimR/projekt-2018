@@ -1,0 +1,38 @@
+.title-ex {
+	margin: 4% auto 0 auto;
+}
+
+.make-quiz-button {
+	padding: 5px 10px 5px 10px;
+    margin-right: 1%;
+    font-size: 18px;
+    letter-spacing: 1px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border: 1px solid #68b0ff;
+    background-color: white;
+    color: #68b0ff;
+    cursor: pointer;
+    float: left;
+    transition: 0.5s;
+}
+
+.make-quiz-button:first-child {
+    margin-left: 15px;
+}
+
+[class="make-quiz-button"]:hover {
+	background-color: #e9f0ff;
+}
+
+.top-nav {
+	margin-top: 5%;
+	height: 32px;
+	border-bottom: 1px solid #68b0ff;
+}
+
+.quiz-transition-button {
+	background-color: #68b0ff;
+	color: white;
+	cursor: context-menu;
+}

@@ -1,6 +1,5 @@
 .wrapper {
     width: 1000px;
-    height: fit-content;
     margin: 0 auto;
 }
 body {
@@ -38,7 +37,6 @@ body {
     width: 50%;
     margin: 0 auto;
     padding-bottom: 10px;
-    box-shadow: 0px 0px 5px -1px #8E8973;
     color: #595959;
 }
 .question {
@@ -92,3 +90,4 @@ body {
     color: #868686;
     padding-bottom: 5%;
 }
+

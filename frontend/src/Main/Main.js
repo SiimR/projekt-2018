@@ -1,56 +1,73 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './Main.css';
-import ToQuiz from '../ToQuiz/ToQuiz.js';
+import './MainExtra.css';
 import LogIn from '../LogIn/LogIn.js';
+import TakeQuiz from '../TakeQuiz/TakeQuiz.js';
+import UserQuizes from '../UserQuizes/UserQuizes.js';
 import axios from 'axios';
+
 
 export default class Main extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      quizMaker: '',
+      takeQuiz: 'quiz-transition-button',
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handlePost = this.handlePost.bind(this);
+    this.changeView = this.changeView.bind(this);
+    this.logOut = this.logOut.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  changeView(element) {
+    if (this.state.quizMaker === '' && element.currentTarget.id === 'make') {
+      this.setState({quizMaker: 'quiz-transition-button'});
+      this.setState({takeQuiz: ''});
+      ReactDOM.render(<UserQuizes userData={this.props.userData} />, document.getElementById('inner-root'));
+    } else if (this.state.takeQuiz === '' && element.currentTarget.id === 'take') {
+      this.setState({quizMaker: ''});
+      this.setState({takeQuiz: 'quiz-transition-button'});
+      ReactDOM.render(<TakeQuiz userData={this.props.userData} username={this.props.username} />,
+       document.getElementById('inner-root'));
+    }
   }
 
-  loginPage() {
-    ReactDOM.render(<LogIn/>, document.getElementById('root'));
+  componentDidMount() {
+    ReactDOM.render(<TakeQuiz userData={this.props.userData} username={this.props.username} />,
+     document.getElementById('inner-root'));
   }
 
-  handlePost(event) {
-    event.preventDefault();
-    let url = 'http://localhost:8082/quizzifly/api/quizzes/' + this.state.value;
-    axios.get(url)
-      .then(response => {
-        if (response.data["name"]) {
-          const recivedData = JSON.stringify(response.data["questions"]);
-          const name = response.data["name"];
-          ReactDOM.render(<ToQuiz data={recivedData} name={name} />, document.getElementById('root'));
-        } else {
-          document.getElementById("error").style.display = "block";
-        }
-      }).catch(error => {
-        document.getElementById("error").style.display = "block";
+  logOut() {
+    axios.post('http://localhost:8082/quizzifly/api/users/login', {
+          userData: this.props.userData,
       })
+      .then(function (response) {
+        ReactDOM.render(<LogIn />, document.getElementById('root'));
+      })
+      .catch(function (error) {
+        window.location.reload();
+      });
   }
 
   render() {
     return (
       <div className="wrapper">
-        <h1 className="main-title">QUIZZIFLY</h1>
-        <form className="search-form" onSubmit={this.handlePost} >
-          <input type="text" name="quiz-id" onChange={this.handleChange} placeholder="Enter quiz ID" className="search-input" />
-          <span id="error">Couldn't find it, mate!</span>
-          <input type="submit"  name="submit" value="Find!" id="submit-button" />
-        </form>
-        <div className="login-wrapper" onClick={this.loginPage}><a id="login">Make your own quiz</a></div>
+        <h1 className="main-title title-ex">QUIZZIFLY</h1>
+        <div className="top-nav">
+            <button id="take" className={'make-quiz-button ' + this.state.takeQuiz} onClick={this.changeView}>
+              Take a quiz
+            </button>
+            <button id="make" className={'make-quiz-button ' + this.state.quizMaker} onClick={this.changeView}>
+              Make a quiz
+            </button>
+          <div className="user-name">
+            <span>{this.props.username}</span>
+            <span title="Log Out" onClick={this.logOut}>X</span>
+          </div>
+        </div>
+        <div id="inner-root">
+        </div>
       </div>
     );
   }

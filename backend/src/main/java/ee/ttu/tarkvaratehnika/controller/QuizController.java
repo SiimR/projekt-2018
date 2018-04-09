@@ -5,8 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.List;
 import ee.ttu.tarkvaratehnika.model.QuizModel;
 import ee.ttu.tarkvaratehnika.service.QuizService;
 
@@ -21,6 +22,11 @@ public class QuizController {
 	@GetMapping("/{reference}")
 	public ResponseEntity<QuizModel> get(@PathVariable("reference") String reference) {
 		return ResponseEntity.ok(quizService.findByReference(reference));
+	}
+	
+	@GetMapping()
+	public ResponseEntity<List<QuizModel>> list(@RequestParam(value = "userId") Integer userId) {
+		return ResponseEntity.ok(quizService.listUserRelated(userId));
 	}
 	
 	@Autowired

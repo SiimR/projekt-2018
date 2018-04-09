@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Marmelad');
 .wrapper {
   width: 1000px;
   height: 530px;
@@ -6,47 +7,58 @@
 body {
   margin-top: 0;
   font-family: 'Open Sans', sans-serif;
+  background-image: url('../back.png');
+  background-repeat: no-repeat;
+  background-size:cover;
+}
+*:focus {
+    outline: none;
 }
 .main-title {
-    letter-spacing: 5px;
+    letter-spacing: 10px;
     font-weight: bold;
-    font-size: 50px;
-    text-shadow: -1px 0 #6b92c8, 0 1px #6b92c8, 1px 0 #6b92c8, 0 -1px #6b92c8;
-    color: #6b92c8;
-    width: 30%;
-    margin: 17% auto 0 auto;
+    font-size: 52px;
+    text-shadow: -1px 0 #68b0ff, 0 1px #68b0ff, 1px 0 #68b0ff, 0 -1px #68b0ff;
+    color: #68b0ff;
+    width: fit-content;
+    margin: 12% auto 0 auto;
     position: relative;
     top: 20px;
+    font-family: 'Marmelad', sans-serif;
 }
 .search-form {
-  margin: 5% auto 0 auto;
+    margin: 5% auto 0 auto;
     width: 30%;
     align-content: center;
 }
+.increase-margin {
+    margin: 20% auto 0 auto;
+}
 .search-input {
     padding: 10px;
-    border-radius: 8px;
-    letter-spacing: 1px;
-    border: 2px solid #6b92c8;
+    letter-spacing: 2px;
+    border: none;
+    text-align: center;
     width: 75%;
     margin-left: 5.5%;
-    margin-bottom: 5%;
+    margin-bottom: 9%;
+    background-color: #007aff17;
 }
 #submit-button {
     float: left;
     margin-top: 7%;
-    margin-left: 35%;
-    padding: 10px 15px 10px 15px;
+    margin-left: 32%;
+    padding: 10px 20px 10px 20px;
     letter-spacing: 1px;
     font-weight: bold;
-    border: none;
-    border-radius: 7px;
-    background-color: #6b92c8;
-    color: #f8f8f8;
+    border-radius: 4px;
+    background-color: #ffffffff;
+    color: #68b0ff;
+    border: 1px solid #68b0ff;
 }
 #submit-button:hover {
   cursor: pointer;
-  background-color: #88a5ce;
+  background-color: #e9f0ff;
 }
 #login {
     letter-spacing: 1px;
@@ -81,3 +93,42 @@ body {
     margin-left: 7%;
     margin-top: -4%;
 }
+
+.user-name {
+    float: right;
+    width: fit-content;
+    letter-spacing: 2px;
+    margin-right: 15px;
+    color: #68b0ff;
+}
+
+.user-name span:first-child {
+    padding-right: 10px;
+}
+
+.user-name span:nth-child(2) {
+    padding-right: 5px;
+    padding-left: 7px;
+    padding-bottom: 1px;
+    border-radius: 15px;
+    line-height: 5px;
+    font-size: 14px;
+    border: 2px solid #68b0ff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.user-name span:nth-child(2):hover {
+    background-color: #e9f0ff;
+}
+
+.instruction-text {
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: -6%;
+    letter-spacing: 2px;
+    font-size: 18px;
+    color: grey;
+}
+
+
