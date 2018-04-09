@@ -6,7 +6,7 @@ import './CreateQuiz.css';
 export default class CreateQuiz extends Component {
 
 	sendDataToServer(survey) {
-		survey.completedHtml  = "<b font-size: 50px>Do You want to QUIZZIFLY some more?</b>";
+		survey.completedHtml  = "<b>Do You want to QUIZZIFLY some more?</b>";
 		var resultAsString = JSON.stringify(survey.data);
   		console.log(resultAsString);
 	}
