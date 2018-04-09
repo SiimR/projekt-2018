@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import objectHash from 'object-hash';
 import ReactDOM from 'react-dom';
 import LogIn from '../LogIn/LogIn.js';
-
+import md5 from 'md5';
 
 export default class Registration extends Component {
 	constructor(props) {
@@ -61,13 +60,12 @@ export default class Registration extends Component {
   		axios.post('http://localhost:8082/quizzifly/api/users/register', {
 			name: this.state.username,
 			email: this.state.email,
-	    	passwordHash: objectHash.MD5(this.state.password).toUpperCase(),
+	    	passwordHash: md5(this.state.password).toUpperCase(),
 		  })
 		  .then(function (response) {
 		    ReactDOM.render(<LogIn />, document.getElementById('root'));
 		  })
 		  .catch(function (error) {
-		  	console.log(error);
 		  	this.updateErrorMessage("Something went wrong... Account not registerd!");
 		  }.bind(this));
   	}

@@ -47,7 +47,7 @@ export default class UserQuizes extends Component {
 
   render() {
     return (
-	    <div>
+	    <div className="quiz-wrapper">
         <div className="header">
           Name 
           <span>Quiz ID</span>

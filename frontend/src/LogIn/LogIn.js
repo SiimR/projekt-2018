@@ -5,7 +5,7 @@ import '../Main/Main.css';
 import Main from '../Main/Main.js';
 import Registration from '../Registration/Registration.js';
 import axios from 'axios';
-import objectHash from 'object-hash';
+import md5 from 'md5';
 
 export default class LogIn extends Component {
 
@@ -32,17 +32,15 @@ export default class LogIn extends Component {
   	}
 	
 	sendLogInData() {
-		const hashedPassword = objectHash.MD5(this.state.password).toUpperCase();
 		axios.post('http://localhost:8082/quizzifly/api/users/login', {
 				name: this.state.username,
-		    	passwordHash: hashedPassword,
+		    	passwordHash: md5(this.state.password).toUpperCase(),
 		  })
 		  .then(function (response) {
 		    ReactDOM.render(<Main username={response.data.name} userData={response.data} />, 
 		  		document.getElementById('root'));
 		  })
 		  .catch(function (error) {
-		  	console.log(this.state.password);
 		  	this.displayError("Wrong username or password!");
 		  }.bind(this));
 	}
