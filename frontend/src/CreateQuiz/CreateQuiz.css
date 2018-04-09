@@ -3,57 +3,6 @@
  * Copyright (c) 2015-2018 Devsoft Baltic OÜ  - http://surveyjs.io/
  * License: MIT (http://www.opensource.org/licenses/mit-license.php)
  */
-.sv_window {
-  position: relative;
-  /*bottom: 3px;
-  right: 10px;*/
-  background-color: cadetblue;
-  padding: 1px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.42857143;
-  text-align: left;
-  text-align: start;
-  text-decoration: none;
-  text-shadow: none;
-  text-transform: none;
-  letter-spacing: normal;
-  word-break: normal;
-  word-spacing: normal;
-  word-wrap: normal;
-  white-space: normal;
-  background-color: #fff;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  line-break: auto; }
-
-.sv_window_title {
-  padding: 8px 14px;
-  margin: 0;
-  font-size: 14px;
-  background-color: #f7f7f7;
-  border-bottom: 1px solid #ebebeb;
-  border-radius: 5px 5px 0 0; }
-
-.sv_window_content {
-  padding: 8px;
-  margin: 0; }
-
-.sv_window_title a,
-.sv_window_title a:link,
-.sv_window_title a:visited {
-  text-decoration: none;
-  font-size: 14px;
-  font-style: normal;
-  color: black; }
-
 .sv_main.sv_frame .sv_container {
   max-width: 80%;
   margin: auto;
@@ -142,7 +91,7 @@
 
 .sv_main {
   position: relative;
-  width: 100%;
+  width: 150%;
   font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans",
  "Helvetica Neue", Arial, sans-serif;
   font-size: 14px; }
