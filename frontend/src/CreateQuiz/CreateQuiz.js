@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import * as Survey from 'survey-react';
 import './CreateQuiz.css';
+import LogIn from '../LogIn/LogIn.js';
 
 export default class CreateQuiz extends Component {
 
 	sendDataToServer(survey) {
-		survey.completedHtml  = "<b>Do You want to QUIZZIFLY some more?</b>";
 		var resultAsString = JSON.stringify(survey.data);
   		console.log(resultAsString);
+  		ReactDOM.render(
+		  <Main />, document.getElementById("root"));
+  		
 	}
 
 	displaySurvey() {
@@ -95,4 +98,3 @@ export default class CreateQuiz extends Component {
 		}
 
 }
-
