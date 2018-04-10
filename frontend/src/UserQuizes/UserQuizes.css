@@ -12,8 +12,6 @@
 #quiz-table tr:not(:first-child) {
 	height: 35px;
 }
-#user-quizes tr:nth-child(1) {
-}
 #quiz-table tr td:nth-child(3) {
 	cursor: pointer;
 	padding: 0;
@@ -49,9 +47,6 @@
 }
 #user-quizes tr:nth-child(2n + 1) {
 	background-color: #f0f1fdb0;
-}
-.register-increase-margin {
-	margin-left: 48%;
 }
 
 #user-quizes {

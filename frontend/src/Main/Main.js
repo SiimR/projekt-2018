@@ -28,14 +28,15 @@ export default class Main extends Component {
     } else if (this.state.takeQuiz === '' && element.currentTarget.id === 'take') {
       this.setState({quizMaker: ''});
       this.setState({takeQuiz: 'quiz-transition-button'});
-      ReactDOM.render(<TakeQuiz userData={this.props.userData} username={this.props.username} />,
+      ReactDOM.render(<TakeQuiz userData={this.props.userData} />,
        document.getElementById('inner-root'));
     }
   }
 
   componentDidMount() {
-    ReactDOM.render(<TakeQuiz userData={this.props.userData} username={this.props.username} />,
-     document.getElementById('inner-root'));
+    console.log(this.props.createQuiz);
+    ReactDOM.render(<TakeQuiz userData={this.props.userData} />,
+      document.getElementById('inner-root'));
   }
 
   logOut() {
@@ -50,6 +51,13 @@ export default class Main extends Component {
       });
   }
 
+  catchError() {
+    if (this.props.createQuiz) {
+      console.log("Do something...");
+    }
+  }
+
+
   render() {
     return (
       <div className="wrapper">
@@ -62,7 +70,7 @@ export default class Main extends Component {
               Make a quiz
             </button>
           <div className="user-name">
-            <span>{this.props.username}</span>
+            <span>{this.props.userData.name}</span>
             <span title="Log Out" onClick={this.logOut}>X</span>
           </div>
         </div>
