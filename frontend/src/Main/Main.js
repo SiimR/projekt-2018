@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './Main.css';
 import './MainExtra.css';
-import LogIn from '../LogIn/LogIn.js';
 import TakeQuiz from '../TakeQuiz/TakeQuiz.js';
 import UserQuizes from '../UserQuizes/UserQuizes.js';
 import axios from 'axios';
@@ -15,6 +14,7 @@ export default class Main extends Component {
     this.state = {
       quizMaker: '',
       takeQuiz: 'quiz-transition-button',
+      quizCreationFailed: null
     };
     this.changeView = this.changeView.bind(this);
     this.logOut = this.logOut.bind(this);
@@ -33,27 +33,41 @@ export default class Main extends Component {
     }
   }
 
+  didComponentGetNewProps() {
+    if (typeof this.props.quizCreationFailed !== "undefined" 
+      && this.props.quizCreationFailed !== this.state.quizCreationFailed) {
+      this.setState({quizCreationFailed: this.props.quizCreationFailed});
+    }
+  }
+
   componentDidMount() {
-    console.log(this.props.createQuiz);
     ReactDOM.render(<TakeQuiz userData={this.props.userData} />,
       document.getElementById('inner-root'));
+    this.didComponentGetNewProps();
+    this.catchQuizCreationError();
   }
 
   logOut() {
-    axios.post('http://localhost:8082/quizzifly/api/users/login', {
+    axios.post('http://localhost:8082/quizzifly/api/users/logout', {
           userData: this.props.userData,
       })
-      .then(function (response) {
-        ReactDOM.render(<LogIn />, document.getElementById('root'));
-      })
-      .catch(function (error) {
-        window.location.reload();
-      });
+      window.location.reload();
   }
 
-  catchError() {
-    if (this.props.createQuiz) {
-      console.log("Do something...");
+  catchQuizCreationError() {
+    if (this.props.quizCreationFailed === 1 || this.props.quizCreationFailed === 2) {
+      this.setState({quizMaker: 'quiz-transition-button'});
+      this.setState({takeQuiz: ''});
+    }
+    if (this.props.quizCreationFailed === 1) {
+      ReactDOM.render(
+        <UserQuizes userData={this.props.userData} quizCreationFailed={1} />,
+        document.getElementById('inner-root'));
+      
+    } else if (this.props.quizCreationFailed === 2) {
+      ReactDOM.render(
+        <UserQuizes userData={this.props.userData} quizCreationFailed={2} />,
+        document.getElementById('inner-root'));
     }
   }
 

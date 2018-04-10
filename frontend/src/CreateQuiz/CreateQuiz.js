@@ -15,17 +15,16 @@ export default class CreateQuiz extends Component {
 	}
 
 	sendDataToServer(survey) {
-  		console.log(this.changeJson(survey.data));
   		let url = 'http://localhost:8082/quizzifly/api/quizzes/';
 	    axios.post(url, {
 	    	json : this.changeJson(survey.data),
 	    })
 	      .then(response => {
 	        ReactDOM.render(
-		  		<Main userData={this.props.userData} createQuiz={true} />, document.getElementById("root"));
+		  		<Main userData={this.props.userData} quizCreationFailed={2} />, document.getElementById("root"));
 	      }).catch(error => {
 	        ReactDOM.render(
-		  		<Main userData={this.props.userData} createQuiz={false} />, document.getElementById("root"));
+		  		<Main userData={this.props.userData} quizCreationFailed={1} />, document.getElementById("root"));
 	      })  		
 	}
 
@@ -49,77 +48,77 @@ export default class CreateQuiz extends Component {
 				'answers': answers};
 			arrayOfQuestions.push(questionJson);
 		}
-		let json = {
+		let newJson = {
 		  "userId" : userId,
 		  "reference" : initialJson.reference,
 		  "questions": arrayOfQuestions
 		}
-		return json;
+		return newJson;
 	}
 
 	displaySurvey() {
-		var surveyJSON = {
-	    "showQuestionNumbers": "off",
-	    "elements": [
-		{
-			    "type": "text",
-			    "name": "reference",
-			    "title": "Quiz reference (like: Dogs1, CatsB):",
-			    "isRequired": true
-			}, {
-		    "type": "paneldynamic",
-		    "title": "Questions",
-		    "name": "questions",
-		    "keyName": "name",
-		    "showQuestionNumbers": "none",
-		    "templateTitle": "Question #{panelIndex}",
-		    "templateElements": [
+		const surveyJSON = {
+		    "showQuestionNumbers": "off",
+		    "elements": [
 			{
-			    "type": "text",
-			    "name": "question",
-			    "title": "Question:",
-			    "isRequired": true
-			}, {
-			    "type": "text",
-			    "name": "answer1",
-			    "title": "Answer 1:",
-			    "isRequired": true
-			}, {
-			    "type": "text",
-			    "name": "answer2",
-			    "title": "Answer 2:",
-			    "isRequired": true,
-			    "startWithNewLine": false
-			}, {
-			    "type": "text",
-			    "name": "answer3",
-			    "title": "Answer 3:",
-			    "isRequired": true
-			}, {
-			    "type": "text",
-			    "name": "answer4",
-			    "title": "Answer 4:",
-			    "isRequired": true,
-			    "startWithNewLine": false
-			}, {
-			    "type": "dropdown",
-			    "name": "right_answer",
-			    "title": "Right answer number:",
-			    "isRequired": true,
-			    choices: [1, 2, 3, 4],
-			}, {
-			    "type": "text",
-			    "name": "points",
-			    "title": "Points (NOT obligatory):",
-			    "startWithNewLine": false
-		}
-		    ],
-		    "minPanelCount": 1,
-		    "panelAddText": "Add another question",
-		    "panelRemoveText": "Remove item"
-		}
-	    ]
-	};
+				    "type": "text",
+				    "name": "reference",
+				    "title": "Quiz reference (like: Dogs1, CatsB):",
+				    "isRequired": true
+				}, {
+			    "type": "paneldynamic",
+			    "title": "Questions",
+			    "name": "questions",
+			    "keyName": "name",
+			    "showQuestionNumbers": "none",
+			    "templateTitle": "Question #{panelIndex}",
+			    "templateElements": [
+				{
+				    "type": "text",
+				    "name": "question",
+				    "title": "Question:",
+				    "isRequired": true
+				}, {
+				    "type": "text",
+				    "name": "answer1",
+				    "title": "Answer 1:",
+				    "isRequired": true
+				}, {
+				    "type": "text",
+				    "name": "answer2",
+				    "title": "Answer 2:",
+				    "isRequired": true,
+				    "startWithNewLine": false
+				}, {
+				    "type": "text",
+				    "name": "answer3",
+				    "title": "Answer 3:",
+				    "isRequired": true
+				}, {
+				    "type": "text",
+				    "name": "answer4",
+				    "title": "Answer 4:",
+				    "isRequired": true,
+				    "startWithNewLine": false
+				}, {
+				    "type": "dropdown",
+				    "name": "right_answer",
+				    "title": "Right answer number:",
+				    "isRequired": true,
+				    choices: [1, 2, 3, 4],
+				}, {
+				    "type": "text",
+				    "name": "points",
+				    "title": "Points (NOT obligatory):",
+				    "startWithNewLine": false
+			}
+			    ],
+			    "minPanelCount": 1,
+			    "panelAddText": "Add another question",
+			    "panelRemoveText": "Remove item"
+			}
+		    ]
+		};
 	
 	ReactDOM.render(
 	  <Survey.Survey json={surveyJSON} onComplete={this.sendDataToServer}/>,
@@ -128,9 +127,7 @@ export default class CreateQuiz extends Component {
 
 	componentDidMount() {
 		this.displaySurvey();
-		console.log(this.props.username);
 	}
-
 
 	render() {
 		return (
@@ -138,6 +135,5 @@ export default class CreateQuiz extends Component {
 				<div id="surveyElement"></div>
 			</div>
 		);
-		}
-
+	}
 }
