@@ -12,14 +12,15 @@ export default class UserQuizes extends Component {
       listOfUserQuizes: [],
     };
     this.getQuizesFromServer = this.getQuizesFromServer.bind(this);
-    this.newQuiz = this.newQuiz.bind(this);
+    this.createNewQuiz = this.createNewQuiz.bind(this);
   }
 
   getQuizesFromServer() {
-    axios.get('http://localhost:8082/quizzifly/api/quizzes/?userId=' + this.props.userData.id)
+    let url = 'http://localhost:8082/quizzifly/api/quizzes/?userId=';
+    axios.get(url + this.props.userData.id)
       .then(function (response) {
         this.displayUserQuizes(response);
-        this.state.listOfUserQuizes = response.data;
+        this.setState({listOfUserQuizes: response.data});
       }.bind(this))
       .catch(function (error) {
         this.displayError("Wrong username or password!");
@@ -30,7 +31,7 @@ export default class UserQuizes extends Component {
     let userQuizes = [];
     for (let index = listOfUserQuizes.data.length - 1; index >= 0; index--) {
       userQuizes.push(
-        <tr>
+        <tr key={"quiz-" + index}>
           <td>{listOfUserQuizes.data[index].name}</td>
           <td>{listOfUserQuizes.data[index].reference}</td>
           <td>EDIT</td>
@@ -43,12 +44,25 @@ export default class UserQuizes extends Component {
     ReactDOM.render(userQuizes, document.getElementById('user-quizes'));
   }
 
-  newQuiz() {
+  createNewQuiz() {
     ReactDOM.render(<CreateQuiz userData={this.props.userData} />, document.getElementById('root'));
+  }
+
+  displayQuizCreationNotification() {
+    const notificationElement = document.getElementById("quiz-creation-notification");
+    if (this.props.quizCreationFailed === 1) {
+      notificationElement.innerHTML = "Quiz creation failed!";
+      notificationElement.style.display = "block";
+      notificationElement.style.color = "crimson";
+    } else if (this.props.quizCreationFailed === 2) {
+      notificationElement.innerHTML = "Quiz created!";
+      notificationElement.style.display = "block";
+    }
   }
 
   componentDidMount() {
     this.getQuizesFromServer();
+    this.displayQuizCreationNotification();
   }
 
   render() {
@@ -62,7 +76,8 @@ export default class UserQuizes extends Component {
           <tbody id="user-quizes">
           </tbody>
         </table>
-        <button className="register-button register-increase-margin" onClick={this.newQuiz} >New</button>
+        <p id="quiz-creation-notification"></p>
+        <button className="register-button register-increase-margin" onClick={this.createNewQuiz} >New</button>
 	    </div>
     );
   }

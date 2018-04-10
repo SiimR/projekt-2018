@@ -76,10 +76,10 @@ export default class Registration extends Component {
 	      <link rel="stylesheet" type="text/css" href="LogIn/LogIn.css" />
 	        <h1 className="main-title up">QUIZZIFLY</h1>
 	        <form className="search-form" onSubmit={this.registerAccount}>
-	        	<input type="text" name="quiz-id" placeholder="Username" className="search-input" onChange={this.handleChange} required />
-	        	<input type="email" name="quiz-id" placeholder="Email" className="search-input" onChange={this.handleChange} required />
-	          	<input type="password" name="quiz-id" id="password" placeholder="Password" className="search-input" onChange={this.handleChange} required />
-	          	<input type="password" name="quiz-id" id="re-password" placeholder="Re-enter Password" className="search-input" onChange={this.handleChange} required />
+	        	<input type="text" name="quiz-id" placeholder="Username" className="search-input" onChange={this.handleChange} />
+	        	<input type="email" name="quiz-id" placeholder="Email" className="search-input" onChange={this.handleChange} />
+	          	<input type="password" name="quiz-id" id="password" placeholder="Password" className="search-input" onChange={this.handleChange} />
+	          	<input type="password" name="quiz-id" id="re-password" placeholder="Re-enter Password" className="search-input" onChange={this.handleChange} />
 	          	<input type="submit"  name="submit" value="Register" id="submit-button" className="register" onClick={this.registerAccount} />
 	        </form>
 	        <p id="error-message">

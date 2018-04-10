@@ -66,8 +66,8 @@ export default class LogIn extends Component {
 	        <h1 className="main-title up">QUIZZIFLY</h1>
 	        <p className="moto">Quizzes from people to people</p>
 	        <form className="search-form">
-	          <input type="text" name="login" onChange={this.handleChange} placeholder="Username" className="search-input" required />
-	          <input type="password" name="login" onChange={this.handleChange} placeholder="Password" className="search-input" required />
+	          <input type="text" name="login" onChange={this.handleChange} placeholder="Username" className="search-input" />
+	          <input type="password" name="login" onChange={this.handleChange} placeholder="Password" className="search-input" />
 	          <p id="log-in-error">Wrong username or password!</p>
 	          <input type="submit"  name="submit" onClick={this.handelLogIn} value="Log In" id="submit-button" />
 	        </form>

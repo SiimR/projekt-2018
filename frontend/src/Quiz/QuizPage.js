@@ -72,7 +72,7 @@ export default class QuizPage extends Component {
     ReactDOM.render(titleElement, document.getElementById("quiz-name"));
     ReactDOM.render(questionsElement, document.getElementById("display"));
 
-    this.inputNotSelectedNotification();
+    this.removeNotification();
     this.updateIndex();
   }
 
@@ -86,9 +86,13 @@ export default class QuizPage extends Component {
 
   inputNotSelectedNotification() {
     const notification = <p id="notify">Choose an answer!</p>
-    if (document.getElementById("notify")) {
+    if (document.getElementById("notify-div") && !document.getElementById("notify")) {
       ReactDOM.render(notification, document.getElementById("notify-div"));
-    } else if (document.getElementById("notify-div")) {
+    }
+  }
+
+  removeNotification() {
+    if (document.getElementById("notify")) {
       ReactDOM.render("", document.getElementById("notify-div"));
     }
   }
@@ -150,8 +154,8 @@ export default class QuizPage extends Component {
         <div id="display">
             
         </div>
-        <button id="submit-quize" className="buttona" onClick={() => {this.handleQuestions()}}>Next</button>
-        <button id="home-button" className="buttona" onClick={() => {this.home()}} style={{display: "none"}}>Home!</button>
+        <button id="submit-quize" className="next-action" onClick={() => {this.handleQuestions()}}>Next</button>
+        <button id="home-button" className="next-action" onClick={() => {this.home()}} style={{display: "none"}}>Home!</button>
       </div>
     );
   }
