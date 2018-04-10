@@ -2,16 +2,59 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import * as Survey from 'survey-react';
 import './CreateQuiz.css';
-import LogIn from '../LogIn/LogIn.js';
+import Main from '../Main/Main.js';
+import './CreateQuizExtra.css';
+import axios from 'axios';
 
 export default class CreateQuiz extends Component {
 
+	constructor(props) {
+	    super(props);
+	    this.sendDataToServer = this.sendDataToServer.bind(this);
+	   	this.changeJson = this.changeJson.bind(this);
+	}
+
 	sendDataToServer(survey) {
-		var resultAsString = JSON.stringify(survey.data);
-  		console.log(resultAsString);
-  		ReactDOM.render(
-		  <Main />, document.getElementById("root"));
-  		
+  		console.log(this.changeJson(survey.data));
+  		let url = 'http://localhost:8082/quizzifly/api/quizzes/';
+	    axios.post(url, {
+	    	json : this.changeJson(survey.data),
+	    })
+	      .then(response => {
+	        ReactDOM.render(
+		  		<Main userData={this.props.userData} createQuiz={true} />, document.getElementById("root"));
+	      }).catch(error => {
+	        ReactDOM.render(
+		  		<Main userData={this.props.userData} createQuiz={false} />, document.getElementById("root"));
+	      })  		
+	}
+
+	changeJson(initialJson) {
+		let userId = this.props.userData.id;
+		let arrayOfQuestions = [];
+		for (let i = 0; i < initialJson.questions.length; i++) {
+			let question = initialJson.questions[i];
+			let answers = [];
+			let counter = 1;
+			while(true) {
+				if(!question["answer" + counter]) break;
+				let answer = 
+					{'content' : question["answer" + counter], 'correct': counter == question.right_answer};
+				answers.push(answer);
+				counter++;
+			} 
+			let questionJson = {
+				'content': question.question, 
+				'points': question.points ? question.points : 0, 
+				'answers': answers};
+			arrayOfQuestions.push(questionJson);
+		}
+		let json = {
+		  "userId" : userId,
+		  "reference" : initialJson.reference,
+		  "questions": arrayOfQuestions
+		}
+		return json;
 	}
 
 	displaySurvey() {
@@ -80,11 +123,12 @@ export default class CreateQuiz extends Component {
 	
 	ReactDOM.render(
 	  <Survey.Survey json={surveyJSON} onComplete={this.sendDataToServer}/>,
-	  document.getElementById("surveyElement"));
+	  	document.getElementById("surveyElement"));
 	}
 
 	componentDidMount() {
 		this.displaySurvey();
+		console.log(this.props.username);
 	}
 
 
@@ -92,7 +136,6 @@ export default class CreateQuiz extends Component {
 		return (
 			<div>
 				<div id="surveyElement"></div>
-				<div id="surveyResult"></div>
 			</div>
 		);
 		}

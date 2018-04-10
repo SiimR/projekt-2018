@@ -80,7 +80,7 @@ export default class QuizPage extends Component {
     document.getElementById("submit-quize").style.display = "none";
     document.getElementById("home-button").style.display = "block";
     const summaryElement = 
-      <Summary nickname={this.props.username} json={this.props.data} answers={this.state.answers} />;
+      <Summary nickname={this.props.userData.name} json={this.props.data} answers={this.state.answers} />;
     ReactDOM.render(summaryElement, document.getElementById("display"));
   }
 
@@ -134,7 +134,7 @@ export default class QuizPage extends Component {
   }
 
   home() {
-    ReactDOM.render(<Main username={this.props.username} userData={this.props.userData} />, 
+    ReactDOM.render(<Main userData={this.props.userData} />, 
       document.getElementById("root"));
   }
 

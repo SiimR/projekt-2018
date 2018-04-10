@@ -37,7 +37,7 @@ export default class LogIn extends Component {
 		    	passwordHash: md5(this.state.password).toUpperCase(),
 		  })
 		  .then(function (response) {
-		    ReactDOM.render(<Main username={response.data.name} userData={response.data} />, 
+		    ReactDOM.render(<Main userData={response.data} />, 
 		  		document.getElementById('root'));
 		  })
 		  .catch(function (error) {

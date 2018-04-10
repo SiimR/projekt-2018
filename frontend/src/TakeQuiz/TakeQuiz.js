@@ -24,10 +24,11 @@ export default class TakeQuiz extends Component {
     let url = 'http://localhost:8082/quizzifly/api/quizzes/' + this.state.value;
     axios.get(url)
       .then(response => {
+        console.log(response.data);
         if (response.data["name"]) {
           const recivedData = JSON.stringify(response.data["questions"]);
           const quizName = response.data["name"];
-          ReactDOM.render(<QuizPage data={recivedData} quizName={quizName} userData={this.props.userData} username={this.props.username}  />,
+          ReactDOM.render(<QuizPage data={recivedData} quizName={quizName} userData={this.props.userData} />,
             document.getElementById('root'));
         } else {
           document.getElementById("error").style.display = "block";

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './UserQuizes.css';
 import axios from 'axios';
+import CreateQuiz from '../CreateQuiz/CreateQuiz.js'; 
 
 export default class UserQuizes extends Component {
 
@@ -11,6 +12,7 @@ export default class UserQuizes extends Component {
       listOfUserQuizes: [],
     };
     this.getQuizesFromServer = this.getQuizesFromServer.bind(this);
+    this.newQuiz = this.newQuiz.bind(this);
   }
 
   getQuizesFromServer() {
@@ -26,7 +28,7 @@ export default class UserQuizes extends Component {
 
   displayUserQuizes(listOfUserQuizes) {
     let userQuizes = [];
-    for (let index = 0; index < listOfUserQuizes.data.length; index++) {
+    for (let index = listOfUserQuizes.data.length - 1; index >= 0; index--) {
       userQuizes.push(
         <tr>
           <td>{listOfUserQuizes.data[index].name}</td>
@@ -39,6 +41,10 @@ export default class UserQuizes extends Component {
       );
     }
     ReactDOM.render(userQuizes, document.getElementById('user-quizes'));
+  }
+
+  newQuiz() {
+    ReactDOM.render(<CreateQuiz userData={this.props.userData} />, document.getElementById('root'));
   }
 
   componentDidMount() {
@@ -56,7 +62,7 @@ export default class UserQuizes extends Component {
           <tbody id="user-quizes">
           </tbody>
         </table>
-        <button className="register-button register-increase-margin">New</button>
+        <button className="register-button register-increase-margin" onClick={this.newQuiz} >New</button>
 	    </div>
     );
   }
