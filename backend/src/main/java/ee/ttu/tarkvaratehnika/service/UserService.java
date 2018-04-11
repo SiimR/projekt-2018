@@ -64,6 +64,10 @@ public class UserService {
 		return userRepository.save(userEntity);
 	}
 	
+	public UserEntity findById(Integer id) {
+		return userRepository.findById(id);
+	}
+	
 	private void validateUserUniqueConstraints(UserEntity user) {
 		validateUniqueNameConstraint(user.getName());
 		validateUniqueEmailConstraint(user.getEmail());

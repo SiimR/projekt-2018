@@ -17,6 +17,10 @@ public class QuizRepository {
 	
 	private SessionFactory sessionFactory;
 	
+	public Integer save(QuizEntity quiz) {
+		return (Integer) sessionFactory.getCurrentSession().save(quiz);
+	}
+	
 	public QuizEntity findByReference(String reference) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(QuizEntity.class);
 		

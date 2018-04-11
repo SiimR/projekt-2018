@@ -1,18 +1,28 @@
 package ee.ttu.tarkvaratehnika.entity;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.*;
+
+import ee.ttu.tarkvaratehnika.entity.UserEntity.UserEntityBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "answer", schema = "quizzy")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AnswerEntity {
 	
 	@Id
 	@Column(name = "answer_id", updatable = false, insertable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "answer_seq")
-	@SequenceGenerator(name = "answer_seq", sequenceName = "answer_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "quizzy.answer_seq")
+	@SequenceGenerator(name = "quizzy.answer_seq", sequenceName = "quizzy.answer_seq")
 	private Integer answerId;
 	
 	@ManyToOne
