@@ -14,6 +14,7 @@ public class ApplicationProperties {
 	public static final String API_PREFIX = "/quizzifly/api";
 	
 	private final CorsProperties cors = new CorsProperties();
+	private final ValidationProperties validation = new ValidationProperties();
 	
 	@Getter
 	@Setter
@@ -21,5 +22,11 @@ public class ApplicationProperties {
 		private String[] allowedOrigins;
 		private String[] allowedMethods;
 		private String[] allowedHeaders;
+	}
+	
+	@Getter
+	@Setter
+	public static class ValidationProperties {
+		private String userJsonSchemaUrl;
 	}
 }
