@@ -16,9 +16,9 @@ export default class CreateQuiz extends Component {
 
 	sendDataToServer(survey) {
   		let url = 'http://localhost:8082/quizzifly/api/quizzes/';
-	    axios.post(url, {
-	    	json : this.changeJson(survey.data),
-	    })
+	    axios.post(url,
+	    	this.changeJson(survey.data)
+	    )
 	      .then(response => {
 	        ReactDOM.render(
 		  		<Main userData={this.props.userData} quizCreationFailed={2} />, document.getElementById("root"));
@@ -38,7 +38,7 @@ export default class CreateQuiz extends Component {
 			while(true) {
 				if(!question["answer" + counter]) break;
 				let answer = 
-					{'content' : question["answer" + counter], 'correct': counter == question.right_answer};
+					{'content' : question["answer" + counter], 'correct': counter === question.right_answer};
 				answers.push(answer);
 				counter++;
 			} 
