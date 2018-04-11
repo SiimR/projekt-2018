@@ -1,5 +1,6 @@
 package ee.ttu.tarkvaratehnika.service;
 
+import java.util.Date;
 import java.util.function.Function;
 import ee.ttu.tarkvaratehnika.entity.AnswerEntity;
 import ee.ttu.tarkvaratehnika.model.AnswerModel;
@@ -18,6 +19,19 @@ public class AnswerService {
 				.correct(entity.getCorrect())
 				.creationDate(entity.getCreationDate())
 				.modifiedDate(entity.getModifiedDate())
+				.build();
+	};
+	
+	public static final Function<AnswerModel, AnswerEntity> ANSWER_MODEL_TO_ENTITY = model -> {
+		if (model == null) {
+			return null;
+		}
+		
+		return AnswerEntity.builder()
+				.content(model.getContent())
+				.correct(model.isCorrect())
+				.creationDate(new Date())
+				.modifiedDate(new Date())
 				.build();
 	};
 }

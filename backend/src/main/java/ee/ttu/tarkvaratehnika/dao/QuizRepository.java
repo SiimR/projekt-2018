@@ -1,5 +1,7 @@
 package ee.ttu.tarkvaratehnika.dao;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -15,12 +17,25 @@ public class QuizRepository {
 	
 	private SessionFactory sessionFactory;
 	
+	public Integer save(QuizEntity quiz) {
+		return (Integer) sessionFactory.getCurrentSession().save(quiz);
+	}
+	
 	public QuizEntity findByReference(String reference) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(QuizEntity.class);
 		
 		criteria.add(Restrictions.eq("reference", reference));
 		
 		return (QuizEntity) criteria.uniqueResult();
+	}
+	
+	public List<QuizEntity> listUserRelated(Integer userId) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(QuizEntity.class);
+		
+		criteria.createAlias("user", "user");
+		criteria.add(Restrictions.eq("user.userId", userId));
+		
+		return criteria.list();
 	}
 
 	@Autowired

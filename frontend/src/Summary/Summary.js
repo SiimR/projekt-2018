@@ -12,8 +12,8 @@ export default class Summary extends Component {
 
   getScore() {
     let score = 0;
-    for (let i = 0; i < this.getJson().length; i++) {
-      if (this.getJson()[i]["answers"][this.getAnswers()[i]]["correct"]) score++;
+    for (let index = 0; index < this.getJson().length; index++) {
+      if (this.getJson()[index]["answers"][this.getAnswers()[index]]["correct"]) score++;
     }
     return score;
   }

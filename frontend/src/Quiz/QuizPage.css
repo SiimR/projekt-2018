@@ -1,6 +1,5 @@
 .wrapper {
     width: 1000px;
-    height: fit-content;
     margin: 0 auto;
 }
 body {
@@ -11,8 +10,8 @@ body {
     letter-spacing: 5px;
     font-weight: bold;
     font-size: 50px;
-    text-shadow: -1px 0 #6b92c8, 0 1px #6b92c8, 1px 0 #6b92c8, 0 -1px #6b92c8;
-    color: #6b92c8;
+    text-shadow: -1px 0 #68b0ff, 0 1px #68b0ff, 1px 0 #68b0ff, 0 -1px #68b0ff;
+    color: #68b0ff;
     width: 30%;
     margin: 5% auto 0 auto;
     position: relative;
@@ -38,7 +37,6 @@ body {
     width: 50%;
     margin: 0 auto;
     padding-bottom: 10px;
-    box-shadow: 0px 0px 5px -1px #8E8973;
     color: #595959;
 }
 .question {
@@ -53,7 +51,7 @@ body {
     height: fit-content;
     padding: 10px 0 10px 0;
     float: left;
-    background-color: #6b92c8;
+    background-color: #68b0ff;
     text-align: center;
     font-weight: bold;
     color: white;
@@ -68,23 +66,27 @@ body {
     margin-top: 10px;
     margin-left: 13%;
 }
-.buttona {
+.next-action {
     margin-top: 2%;
     margin-left: 47%;
     padding: 10px 15px 10px 15px;
     letter-spacing: 1px;
     font-weight: bold;
-    color: #ffffff;
-    background-color: #6b92c8;
-    border: none;
+    color: #68b0ff;
+    background-color: white;
+    border: 1px solid #68b0ff;
     border-radius: 5px;
+}
+
+.next-action:hover {
+    background-color: #e9f0ff;
     cursor: pointer;
 }
+
 #notify {
     text-align: center;
     letter-spacing: 1px;
     color: crimson;
-    display: none;
 }
 .score-field {
     text-align: center;
@@ -92,3 +94,4 @@ body {
     color: #868686;
     padding-bottom: 5%;
 }
+

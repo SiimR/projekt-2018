@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './QuizPage.css';
 import Summary from '../Summary/Summary.js';
+import Main from '../Main/Main.js';
 
 export default class QuizPage extends Component {
   constructor(props) {
@@ -71,7 +72,7 @@ export default class QuizPage extends Component {
     ReactDOM.render(titleElement, document.getElementById("quiz-name"));
     ReactDOM.render(questionsElement, document.getElementById("display"));
 
-    this.inputNotSelectedNotification();
+    this.removeNotification();
     this.updateIndex();
   }
 
@@ -79,15 +80,19 @@ export default class QuizPage extends Component {
     document.getElementById("submit-quize").style.display = "none";
     document.getElementById("home-button").style.display = "block";
     const summaryElement = 
-      <Summary nickname={this.props.username} json={this.props.data} answers={this.state.answers} />;
+      <Summary nickname={this.props.userData.name} json={this.props.data} answers={this.state.answers} />;
     ReactDOM.render(summaryElement, document.getElementById("display"));
   }
 
   inputNotSelectedNotification() {
     const notification = <p id="notify">Choose an answer!</p>
-    if (document.getElementById("notify")) {
+    if (document.getElementById("notify-div") && !document.getElementById("notify")) {
       ReactDOM.render(notification, document.getElementById("notify-div"));
-    } else if (document.getElementById("notify-div")) {
+    }
+  }
+
+  removeNotification() {
+    if (document.getElementById("notify")) {
       ReactDOM.render("", document.getElementById("notify-div"));
     }
   }
@@ -132,6 +137,11 @@ export default class QuizPage extends Component {
     }
   }
 
+  home() {
+    ReactDOM.render(<Main userData={this.props.userData} />, 
+      document.getElementById("root"));
+  }
+
   componentDidMount() {
     this.handleQuestions();
   }
@@ -144,8 +154,8 @@ export default class QuizPage extends Component {
         <div id="display">
             
         </div>
-        <button id="submit-quize" className="buttona" onClick={() => {this.handleQuestions()}}>Next</button>
-        <button id="home-button" className="buttona" onClick={() => {window.location.reload()}} style={{display: "none"}}>Home!</button>
+        <button id="submit-quize" className="next-action" onClick={() => {this.handleQuestions()}}>Next</button>
+        <button id="home-button" className="next-action" onClick={() => {this.home()}} style={{display: "none"}}>Home!</button>
       </div>
     );
   }
