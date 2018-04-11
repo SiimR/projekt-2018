@@ -58,9 +58,10 @@ export default class Registration extends Component {
 
   	sendRegistrationData() {
   		axios.post('http://localhost:8082/quizzifly/api/users/register', {
-			name: this.state.username,
-			email: this.state.email,
-	    	passwordHash: md5(this.state.password).toUpperCase(),
+  			details : {
+				name: this.state.username,
+				email: this.state.email,
+		    	passwordHash: md5(this.state.password).toUpperCase(),}
 		  })
 		  .then(function (response) {
 		    ReactDOM.render(<LogIn />, document.getElementById('root'));
