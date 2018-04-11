@@ -43,6 +43,14 @@ public class UserRepository {
 		return (UserEntity) criteria.uniqueResult();
 	}
 	
+	public UserEntity findById(Integer id) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserEntity.class);
+		
+		criteria.add(Restrictions.eq("userId", id));
+		
+		return (UserEntity) criteria.uniqueResult();
+	}
+	
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
