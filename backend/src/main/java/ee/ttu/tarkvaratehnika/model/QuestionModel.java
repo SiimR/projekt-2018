@@ -3,11 +3,17 @@ package ee.ttu.tarkvaratehnika.model;
 import java.util.Date;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class QuestionModel {
 	
 	private Integer id;
