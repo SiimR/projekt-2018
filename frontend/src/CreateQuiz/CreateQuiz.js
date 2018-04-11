@@ -38,7 +38,7 @@ export default class CreateQuiz extends Component {
 			while(true) {
 				if(!question["answer" + counter]) break;
 				let answer = 
-					{'content' : question["answer" + counter], 'correct': counter === question.right_answer};
+					{'content' : question["answer" + counter], 'correct': counter == question.right_answer};
 				answers.push(answer);
 				counter++;
 			} 
