@@ -14,11 +14,31 @@ public class UserRepository {
 	
 	private SessionFactory sessionFactory;
 	
+	public Integer save(UserEntity user) {
+		return (Integer) sessionFactory.getCurrentSession().save(user);
+	}
+	
 	public UserEntity findLogin(String name, String passwordHash) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserEntity.class);
 		
 		criteria.add(Restrictions.eq("name", name));
 		criteria.add(Restrictions.eq("passwordHash", passwordHash));
+		
+		return (UserEntity) criteria.uniqueResult();
+	}
+	
+	public UserEntity findByName(String name) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserEntity.class);
+		
+		criteria.add(Restrictions.eq("name", name));
+		
+		return (UserEntity) criteria.uniqueResult();
+	}
+	
+	public UserEntity findByEmail(String email) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserEntity.class);
+		
+		criteria.add(Restrictions.eq("email", email));
 		
 		return (UserEntity) criteria.uniqueResult();
 	}

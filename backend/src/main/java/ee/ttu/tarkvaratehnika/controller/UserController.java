@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ee.ttu.tarkvaratehnika.model.UserJsonModel;
 import ee.ttu.tarkvaratehnika.model.UserModel;
 import ee.ttu.tarkvaratehnika.service.UserService;
 
@@ -17,12 +18,8 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping("/register")
-	public ResponseEntity<UserModel> register(@RequestBody UserModel newUserDetails) {
-		if (newUserDetails.getName().length() < 3) {
-			throw new RuntimeException("Sample exception thrown in case user name is shorter than 3 characters.");
-		}
-		
-		return ResponseEntity.ok(newUserDetails);
+	public ResponseEntity<Integer> register(@RequestBody UserJsonModel newUserDetails) {
+		return ResponseEntity.ok(userService.register(newUserDetails));
 	}
 	
 	@PostMapping("/login")

@@ -2,7 +2,6 @@ package ee.ttu.tarkvaratehnika.entity;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,18 +12,23 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "user", schema = "quizzy")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity {
 	
 	@Id
 	@Column(name = "user_id", updatable = false, insertable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-	@SequenceGenerator(name = "user_seq", sequenceName = "user_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "quizzy.user_seq")
+	@SequenceGenerator(name = "quizzy.user_seq", sequenceName = "quizzy.user_seq")
 	private Integer userId;
 	
 	@OneToMany(mappedBy = "user")
