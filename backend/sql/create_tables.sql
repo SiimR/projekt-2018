@@ -48,7 +48,9 @@ CREATE TABLE quizzy.user
 	email VARCHAR(30) NOT NULL,
 	creation_date TIMESTAMP WITH TIME ZONE,
 	modified_date TIMESTAMP WITH TIME ZONE,
-	CONSTRAINT pk_user PRIMARY KEY(user_id)
+	CONSTRAINT pk_user PRIMARY KEY(user_id),
+	CONSTRAINT unique_user_name UNIQUE(name),
+	CONSTRAINT unique_user_email UNIQUE(email)
 )
 WITH (
 OIDS=FALSE
