@@ -17,7 +17,7 @@ public class ApplicationConfiguration {
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
 	
-	@Bean
+	@Bean(destroyMethod = "")
 	public SessionFactory sessionFactory() {
 		return entityManagerFactory.unwrap(SessionFactory.class);
 	}
