@@ -66,7 +66,7 @@ export default class QuizPage extends Component {
   }
 
   displayNextQuestion() {
-    const titleElement = <p className="main"> {this.getJson().title} </p>
+    const titleElement = <p className="main"> {this.props.quizName} </p>
     const questionsElement = this.buildQuestion();
 
     ReactDOM.render(titleElement, document.getElementById("quiz-name"));
@@ -80,7 +80,10 @@ export default class QuizPage extends Component {
     document.getElementById("submit-quize").style.display = "none";
     document.getElementById("home-button").style.display = "block";
     const summaryElement = 
-      <Summary nickname={this.props.userData.name} json={this.props.data} answers={this.state.answers} />;
+      <Summary nickname={this.props.userData.name} 
+                json={this.props.data} 
+                title={this.props.quizName}
+                answers={this.state.answers} />;
     ReactDOM.render(summaryElement, document.getElementById("display"));
   }
 

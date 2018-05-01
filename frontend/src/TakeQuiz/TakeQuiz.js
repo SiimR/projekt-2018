@@ -27,6 +27,7 @@ export default class TakeQuiz extends Component {
         if (response.data["name"]) {
           const recivedData = JSON.stringify(response.data["questions"]);
           const quizName = response.data["name"];
+          console.log(JSON.parse(recivedData));
           ReactDOM.render(<QuizPage data={recivedData} quizName={quizName} userData={this.props.userData} />,
             document.getElementById('root'));
         } else {

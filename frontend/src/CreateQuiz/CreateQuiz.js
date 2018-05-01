@@ -10,54 +10,8 @@ export default class CreateQuiz extends Component {
 
 	constructor(props) {
 	    super(props);
-	    this.sendDataToServer = this.sendDataToServer.bind(this);
-	   	this.changeJson = this.changeJson.bind(this);
-	}
-
-	sendDataToServer(survey) {
-  		let url = 'http://localhost:8082/quizzifly/api/quizzes/';
-	    axios.post(url,
-	    	this.changeJson(survey.data)
-	    )
-	      .then(response => {
-	        ReactDOM.render(
-		  		<Main userData={this.props.userData} quizCreationFailed={2} />, document.getElementById("root"));
-	      }).catch(error => {
-	        ReactDOM.render(
-		  		<Main userData={this.props.userData} quizCreationFailed={1} />, document.getElementById("root"));
-	      })  		
-	}
-
-	changeJson(initialJson) {
-		let userId = this.props.userData.id;
-		let arrayOfQuestions = [];
-		for (let i = 0; i < initialJson.questions.length; i++) {
-			let question = initialJson.questions[i];
-			let answers = [];
-			let counter = 1;
-			while(true) {
-				if(!question["answer" + counter]) break;
-				let answer = 
-					{'content' : question["answer" + counter], 'correct': counter == question.right_answer};
-				answers.push(answer);
-				counter++;
-			} 
-			let questionJson = {
-				'content': question.question, 
-				'points': question.points ? question.points : 0, 
-				'answers': answers};
-			arrayOfQuestions.push(questionJson);
-		}
-		let newJson = {
-		  "userId" : userId,
-		  "reference" : initialJson.reference,
-		  "questions": arrayOfQuestions
-		}
-		return newJson;
-	}
-
-	displaySurvey() {
-		const surveyJSON = {
+	    this.state = {
+	      surveyJSON: {
 		    "showQuestionNumbers": "off",
 		    "elements": [
 			{
@@ -115,16 +69,94 @@ export default class CreateQuiz extends Component {
 			    ],
 			    "minPanelCount": 1,
 			    "panelAddText": "Add another question",
-			    "panelRemoveText": "Remove item"
+			    "panelRemoveText": "Remove previous question"
 			}
 		    ]
-		};
-	
-	ReactDOM.render(
-	  <Survey.Survey json={surveyJSON} onComplete={this.sendDataToServer}/>,
-	  	document.getElementById("surveyElement"));
+		}
+	    };
+	    this.sendDataToServer = this.sendDataToServer.bind(this);
+	   	this.changeJson = this.changeJson.bind(this);
 	}
 
+	sendDataToServer(survey) {
+		console.log(survey.data);
+  		let url = 'http://localhost:8082/quizzifly/api/quizzes/';
+	    axios.post(url,
+	    	this.changeJson(survey.data)
+	    )
+	      .then(response => {
+	        ReactDOM.render(
+		  		<Main userData={this.props.userData} quizCreationFailed={2} />, document.getElementById("root"));
+	      }).catch(error => {
+	        ReactDOM.render(
+		  		<Main userData={this.props.userData} quizCreationFailed={1} />, document.getElementById("root"));
+	      })  	
+	     
+	}
+
+	changeJson(initialJson) {
+		let userId = this.props.userData.id;
+		let arrayOfQuestions = [];
+		for (let i = 0; i < initialJson.questions.length; i++) {
+			let question = initialJson.questions[i];
+			let answers = [];
+			let counter = 1;
+			while(true) {
+				if(!question["answer" + counter]) break;
+				let answer = 
+					{'content' : question["answer" + counter], 'correct': counter == question.right_answer};
+				answers.push(answer);
+				counter++;
+			} 
+			let questionJson = {
+				'content': question.question, 
+				'points': question.points ? question.points : 0, 
+				'answers': answers};
+			arrayOfQuestions.push(questionJson);
+		}
+		let newJson = {
+		  "userId" : userId,
+		  "reference" : initialJson.reference,
+		  "questions": arrayOfQuestions
+		}
+		return newJson;
+	}
+
+	loadPreviousJson(json) {
+		let newJson = {
+		  "questions": [
+		    {
+		      "question": "pjoijp",
+		      "answer1": "oijoih",
+		      "answer2": "y8",
+		      "answer3": "iuhiu",
+		      "answer4": "hyuih",
+		      "right_answer": "1"
+		    }],
+		  "reference": "json."
+		};
+
+		for (let i = 0; i == json.length; i++) {
+			let questionJson = {
+			"question": "pjoijp",
+		      "answer1": "oijoih",
+		      "answer2": "y8",
+		      "answer3": "iuhiu",
+		      "answer4": "hyuih",
+		      "right_answer": "1"
+			}
+		}
+		return newJson;
+	}
+
+	displaySurvey() {
+		let survey = new Survey.Model(this.state.surveyJSON);
+		//survey.data = ... 
+		ReactDOM.render(
+	  		<Survey.Survey model={survey} onComplete={this.sendDataToServer}/>,
+	  		document.getElementById("surveyElement"));
+	}
+		
 	componentDidMount() {
 		this.displaySurvey();
 	}
