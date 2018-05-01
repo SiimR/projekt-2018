@@ -55,3 +55,9 @@
     font-size: 15px;
     display: none;
 }
+
+.account-activation {
+    color: green !important;
+    font-weight: bold;
+    display: block !important;
+}

@@ -55,8 +55,37 @@ export default class LogIn extends Component {
 	}
 
 	displayError(message) {
-		document.getElementById("log-in-error").style.display = "block";
-		document.getElementById("log-in-error").innerHTML = message;
+		const errorElement = document.getElementById("log-in-error");
+		if(errorElement.classList.contains("account-activation")) {
+			errorElement.classList.remove("account-activation");
+		}
+		errorElement.style.display = "block";
+		errorElement.innerHTML = message;
+	}
+
+	displayActivationMessage() {
+		document.getElementById("log-in-error").innerHTML = "Your account has been activated!"
+		document.getElementById("log-in-error").classList.add("account-activation");
+	}
+
+	accountActivation() {
+		const url = window.location.search;
+		const token = url.substring(url.indexOf('=') + 1);
+		if (url.indexOf("?token=") === 0) {
+			axios.post('http://localhost:8082/quizzifly/api/users/login', {
+				token: token,
+		  	})
+		  	.then(function (response) {
+		  		this.displayActivationMessage();
+		  	})
+	  		.catch(function (error) {
+		  		this.displayError("Account activation failed!");
+		  	}.bind(this));
+		}
+	}
+
+	componentDidMount() {
+		this.accountActivation();
 	}
 
 	render() {
@@ -65,14 +94,16 @@ export default class LogIn extends Component {
 	      	<link rel="stylesheet" type="text/css" href="LogIn/LogIn.css" />
 	        <h1 className="main-title up">QUIZZIFLY</h1>
 	        <p className="moto">Quizzes from people to people</p>
-	        <form className="search-form">
-	          <input type="text" name="login" onChange={this.handleChange} placeholder="Username" className="search-input" />
-	          <input type="password" name="login" onChange={this.handleChange} placeholder="Password" className="search-input" />
-	          <p id="log-in-error">Wrong username or password!</p>
-	          <input type="submit"  name="submit" onClick={this.handelLogIn} value="Log In" id="submit-button" />
-	        </form>
-	        <p className="create-account">Don't have an account?</p>
-	        <button className="register-button" onClick={this.registration} >Register account!</button>
+	        <div id="inner-root">
+		        <form className="search-form">
+		          <input type="text" name="login" onChange={this.handleChange} placeholder="Username" className="search-input" />
+		          <input type="password" name="login" onChange={this.handleChange} placeholder="Password" className="search-input" />
+		          <p id="log-in-error">Wrong username or password!</p>
+		          <input type="submit"  name="submit" onClick={this.handelLogIn} value="Log In" id="submit-button" />
+		        </form>
+		        <p className="create-account">Don't have an account?</p>
+		        <button className="register-button" onClick={this.registration} >Register account!</button>
+	        </div>
 	      </div>
 	    );
   	}
