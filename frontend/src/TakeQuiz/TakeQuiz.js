@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import QuizPage from '../Quiz/QuizPage.js';
+import QuizPage from '../Quiz/QuizPage1.js';
 import axios from 'axios';
 
 
