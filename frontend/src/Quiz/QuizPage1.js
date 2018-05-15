@@ -17,7 +17,7 @@ export default class QuizPage extends Component {
 				    showProgressBar: "bottom",
 				    startSurveyText: "Start Quiz",
 				    pages: [{}],
-				    completedHtml: "<h4>You have answered correctly <b id='correct'>{correctedAnswers}</b> questions from <b id='total'>{questionCount}</b>.</h4>"
+				    completedHtml: "<h4>You have answered correctly <b id='correct'>{correctedAnswers}</b> questions from <b id='total'>{questionCount}</b>. Your result will be saved!</h4>"
 				}
 		}
 		this.sendDataToServer = this.sendDataToServer.bind(this);
@@ -44,6 +44,7 @@ export default class QuizPage extends Component {
 	}
 
 	modifyInitialJson(initialJson) {
+		console.log(initialJson);
         for (let i = 0; i < (Object.keys(initialJson).length - 2)/3; i++) {
             var jsonQuestion = {
             questions: [
@@ -75,22 +76,18 @@ export default class QuizPage extends Component {
 
 	sendDataToServer(survey) {
     	document.getElementById("home-button").style.display = "block";
-  		let url = 'http://localhost:8082/quizzifly/api/userAnswers';
-  		let summary = this.makeSummary();
-	    axios.post(url, {
-          summary,
-      }).then(function (response) {
-        this.displayResponseMessage("Results saved!", "green");
-      })
-      .catch(function (error) {
-        this.displayResponseMessage("Error occurred! Results not saved", "crimson");
-      }.bind(this));
+    	document.getElementById("home-button").style.marginTop = "-530px";
+    	document.getElementById("home-button").style.marginLeft = "48%";
 	}
 
-	displayResponseMessage(message, messageColor) {
-		document.getElementById("summary-message").style.display = "block"
-		document.getElementById("summary-message").innerHTML = message;
-		document.getElementById("summary-message").style.color = messageColor;
+	sendSummaryToServer(summary) {
+		axios.post('http://localhost:8082/quizzifly/api/userAnswers', summary
+      ).then(function (response) {
+      	console.log("Jah sain");
+      })
+      .catch(function (error) {
+      	console.log(error);
+      }.bind(this));
 	}
 
 	displaySurvey() {
@@ -113,6 +110,7 @@ export default class QuizPage extends Component {
 	}
 
 	home() {
+		this.sendSummaryToServer(this.makeSummary());
 	    ReactDOM.render(<Main userData={this.props.userData} />, 
 	      document.getElementById("root"));
   	}
