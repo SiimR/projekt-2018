@@ -103,6 +103,7 @@ public class QuizService {
 		entityToUpdate.setModifiedDate(new Date());
 		entityToUpdate.setActive(entity.getActive());
 		entityToUpdate.setTimer(entity.getTimer());
+		entityToUpdate.setQuestions(entity.getQuestions());
 		
 		update(entityToUpdate);
 		
