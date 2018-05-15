@@ -16,7 +16,7 @@ export default class QuizPage extends Component {
 				    title: this.props.quizName,
 				    showProgressBar: "bottom",
 				    startSurveyText: "Start Quiz",
-				    pages: [{}],
+				    pages: [],
 				    completedHtml: "<h4>You have answered correctly <b id='correct'>{correctedAnswers}</b> questions from <b id='total'>{questionCount}</b>. Your result will be saved!</h4>"
 				}
 		}
@@ -40,11 +40,28 @@ export default class QuizPage extends Component {
 			timingJson["answers" + i] = thisAnswers;
 			timingJson["rightanswer" + i] = thisRightAnswer;
 		}
+		if (this.props.quizData.timer != 0) {
+			timingJson["timer"] = this.props.quizData.timer;
+		}
+		console.log(timingJson);
 		return timingJson;
 	}
 
 	modifyInitialJson(initialJson) {
-		console.log(initialJson);
+        if (initialJson.hasOwnProperty("timer")) {
+        	let timerPage = {questions: [{
+        			                    type: "html",
+        			                    html: "You have " + initialJson.timer + " seconds for every page and  " + 
+        			                    initialJson.timer * (Object.keys(initialJson).length - 1)/3 + 
+        			                    " seconds for the whole survey of " + (Object.keys(initialJson).length - 1)/3 + " questions.<br/>Please click on <b>'Start Quiz'</b> button when you are ready."
+        			                }]};
+		    this.state.surveyJSON.pages.push(timerPage);
+            this.state.surveyJSON["showTimerPanel"] = "bottom";
+            this.state.surveyJSON["maxTimeToFinishPage"] = initialJson.timer;
+            this.state.surveyJSON["maxTimeToFinish"] = initialJson.timer * ((Object.keys(initialJson).length - 1)/3);
+            this.state.surveyJSON["startSurveyText"] = "Start Quiz";
+            this.state.surveyJSON["firstPageIsStarted"] = true;
+        }
         for (let i = 0; i < (Object.keys(initialJson).length - 2)/3; i++) {
             var jsonQuestion = {
             questions: [
@@ -59,18 +76,6 @@ export default class QuizPage extends Component {
                 ]
             };
             this.state.surveyJSON.pages.push(jsonQuestion);
-        }
-        if (initialJson.hasOwnProperty("timer")) {
-        	let timerPage = {questions: [{
-        			                    type: "html",
-        			                    html: "You have " + initialJson.timer + " seconds for every page and  " + 
-        			                    initialJson.timer * (Object.keys(initialJson).length - 2)/3 + 
-        			                    " seconds for the whole survey of 4 questions.<br/>Please click on <b>'Start Quiz'</b> button when you are ready."
-        			                }]};
-		    this.state.surveyJSON.pages.push(timerPage);
-            this.state.surveyJSON["showTimerPanel"] = "bottom";
-            this.state.surveyJSON["maxTimeToFinishPage"] = initialJson.timer;
-            this.state.surveyJSON["maxTimeToFinish"] = initialJson.timer * (Object.keys(initialJson).length - 2)/3;
         }
 	}
 
@@ -105,7 +110,6 @@ export default class QuizPage extends Component {
 			"userName" : this.props.userData.name,
 			"quizReference" : this.props.quizRef
 		}
-		console.log(summary);
 		return summary;
 	}
 

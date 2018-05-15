@@ -37,7 +37,6 @@ export default class UserQuizes extends Component {
   }
 
   changeQuizActiveStatus(elem) {
-    console.log(elem.target.className);
     let url = 'http://localhost:8082/quizzifly/api/quizzes/';
     if (elem.target.alt === "Active") {
       elem.target.alt = "Unactive";
@@ -66,7 +65,6 @@ export default class UserQuizes extends Component {
     let url = 'http://localhost:8082/quizzifly/api/quizzes/';
     axios.delete(url + quizId)
       .then(function (response) {
-        console.log(response);
         let row = document.getElementById("quiz-" + quizId);
         row.parentNode.removeChild(row);
       }.bind(this))
@@ -76,7 +74,6 @@ export default class UserQuizes extends Component {
   }
 
   displayUserQuizes(arrayQuizes) {
-    console.log(arrayQuizes.data[0])
     let userQuizes = [];
     for (let index = arrayQuizes.data.length - 1; index >= 0; index--) {
       userQuizes.push(
@@ -113,6 +110,13 @@ export default class UserQuizes extends Component {
     } else if (this.props.quizCreationFailed === 2) {
       notificationElement.innerHTML = "Quiz created!";
       notificationElement.style.display = "block";
+    } else if (this.props.quizCreationFailed === 3) {
+      notificationElement.innerHTML = "Quiz modified!";
+      notificationElement.style.display = "block";
+    } else if (this.props.quizCreationFailed === 4) {
+      notificationElement.innerHTML = "Quiz not modified!";
+      notificationElement.style.display = "block";
+      notificationElement.style.color = "crimson";
     }
   }
 
