@@ -49,7 +49,7 @@ public class QuizService {
 		}
 		
 		return QuizEntity.builder()
-				.name(model.getReference())
+				.name(model.getName())
 				.reference(model.getReference())
 				.description(model.getDescription())
 				.creationDate(new Date())
