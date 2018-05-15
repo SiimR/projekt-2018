@@ -16,25 +16,51 @@ export default class UserQuizes extends Component {
   }
 
   getQuizesFromServer() {
-    let url = 'http://localhost:8082/quizzifly/api/quizzes/?userId=';
-    axios.get(url + this.props.userData.id)
-      .then(function (response) {
-        this.displayUserQuizes(response);
-        this.setState({listOfUserQuizes: response.data});
+    let url = 'http://localhost:8082/quizzifly/api/quizzes/?userId=' + this.props.userData.id;
+    axios.get(url)
+      .then(function (responseData) {
+        this.displayUserQuizes(responseData);
+        this.setState({listOfUserQuizes: responseData.data});
       }.bind(this))
       .catch(function (error) {
-        this.displayError("Wrong username or password!");
+        //this.displayError("Wrong username or password!");
       }.bind(this));
     }
 
-  displayUserQuizes(listOfUserQuizes) {
+  editQuiz(index) {
+    ReactDOM.render(
+      <CreateQuiz userData={this.props.userData} 
+      quizName={this.state.listOfUserQuizes[parseInt(index)].name} 
+      quizRef={this.state.listOfUserQuizes[parseInt(index)].reference}
+      quiz={this.state.listOfUserQuizes[parseInt(index)]} />, 
+      document.getElementById('root'));
+  }
+
+  changeQuizActiveStatus(elem) {
+    console.log(elem.target.alt);
+    if (elem.target.alt === "Active") {
+      elem.target.alt = "Unactive";
+      elem.target.src = require('../UserQuizes/unactive.png');
+    } else {
+      elem.target.alt = "Active";
+      elem.target.src = require('../UserQuizes/active.png');
+    }
+  }
+
+  displayUserQuizes(arrayQuizes) {
     let userQuizes = [];
-    for (let index = listOfUserQuizes.data.length - 1; index >= 0; index--) {
+    for (let index = arrayQuizes.data.length - 1; index >= 0; index--) {
       userQuizes.push(
         <tr key={"quiz-" + index}>
-          <td>{listOfUserQuizes.data[index].name}</td>
-          <td>{listOfUserQuizes.data[index].reference}</td>
-          <td>EDIT</td>
+          <td>{arrayQuizes.data[index].name}</td>
+          <td>{arrayQuizes.data[index].reference}</td>
+          <td>
+            <img className={"img-" + arrayQuizes.data[index].reference} src={ require('../UserQuizes/active.png') } 
+            alt="Active" height="25" width="25" onClick={(elem)=>{this.changeQuizActiveStatus(elem)}} />
+          </td>
+          <td onClick={()=>{this.editQuiz(index)}} >
+            <img src={ require('../UserQuizes/edit.png') } alt="Edit" height="25" width="25" />
+          </td>
           <td>
             <img src={ require('../UserQuizes/bin.png') } alt="Delete" height="25" width="25" />
           </td>
@@ -71,6 +97,7 @@ export default class UserQuizes extends Component {
         <div className="header">
           Name 
           <span>Quiz ID</span>
+          <span>Active</span>
         </div>
         <table id="quiz-table">
           <tbody id="user-quizes">
