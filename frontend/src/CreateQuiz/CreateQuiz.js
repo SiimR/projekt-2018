@@ -141,9 +141,11 @@ export default class CreateQuiz extends Component {
 	    	)
 		      .then(response => {
 		        ReactDOM.render(
-			  		<Main userData={this.props.userData} quizCreationFailed={2} />, document.getElementById("root"));
+			  		<Main userData={this.props.userData} quizCreationFailed={3} />, document.getElementById("root"));
 		      }).catch(error => {
-		        console.log(error);
+		      	console.log(this.changeInitialJson(survey.data));
+		        ReactDOM.render(
+			  		<Main userData={this.props.userData} quizCreationFailed={4} />, document.getElementById("root"));
 		      }) 
   		} else {
   			axios.post(url,
@@ -153,7 +155,9 @@ export default class CreateQuiz extends Component {
 		        ReactDOM.render(
 			  		<Main userData={this.props.userData} quizCreationFailed={2} />, document.getElementById("root"));
 		      }).catch(error => {
-		        console.log(error);
+		      	console.log(this.changeInitialJson(survey.data));
+		        ReactDOM.render(
+			  		<Main userData={this.props.userData} quizCreationFailed={1} />, document.getElementById("root"));
 		      })  
   		}
 	    	
