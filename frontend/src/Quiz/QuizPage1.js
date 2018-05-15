@@ -17,7 +17,7 @@ export default class QuizPage extends Component {
 				    showProgressBar: "bottom",
 				    startSurveyText: "Start Quiz",
 				    pages: [{}],
-				    completedHtml: "<h4>You have answered correctly <b>{correctedAnswers}</b> questions from <b>{questionCount}</b>.</h4>"
+				    completedHtml: "<h4>You have answered correctly <b id='correct'>{correctedAnswers}</b> questions from <b id='total'>{questionCount}</b>.</h4>"
 				}
 		}
 		this.sendDataToServer = this.sendDataToServer.bind(this);
@@ -76,7 +76,6 @@ export default class QuizPage extends Component {
 	sendDataToServer(survey) {
     	document.getElementById("home-button").style.display = "block";
   		let url = 'http://localhost:8082/quizzifly/api/quizzes/';
-  		console.log(survey.data);
 	    axios.post(url, {
           userSummary: 222,
       }).then(function (response) {
@@ -87,23 +86,34 @@ export default class QuizPage extends Component {
       }.bind(this));
 	}
 
-  displayResponseMessage(message, messageColor) {
-    document.getElementById("summary-message").style.display = "block"
-    document.getElementById("summary-message").innerHTML = message;
-    document.getElementById("summary-message").style.color = messageColor;
-  }
+	displayResponseMessage(message, messageColor) {
+		document.getElementById("summary-message").style.display = "block"
+		document.getElementById("summary-message").innerHTML = message;
+		document.getElementById("summary-message").style.color = messageColor;
+	}
 
 	displaySurvey() {
-		this.modifyInitialJson(this.loadJsonFromServer())
+		this.modifyInitialJson(this.loadJsonFromServer());
 		let survey = new Survey.Model(this.state.surveyJSON);
 		ReactDOM.render(
 	  		<Survey.Survey model={survey} onComplete={this.sendDataToServer}/>,
 	  		document.getElementById("surveyElement"));
 	}
 
+	sendSummaryToServer() {
+		let summary = {
+			"total" : document.getElementById("total").innerHTML,
+			"correct" : document.getElementById("correct").innerHTML,
+			"userName" : this.props.userData.name,
+			"quizReference" : this.props.quizRef
+		}
+		console.log(summary);
+	}
+
 	home() {
-    ReactDOM.render(<Main userData={this.props.userData} />, 
-      document.getElementById("root"));
+		this.sendSummaryToServer();
+	    ReactDOM.render(<Main userData={this.props.userData} />, 
+	      document.getElementById("root"));
   	}
 		
 	componentDidMount() {
