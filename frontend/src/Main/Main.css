@@ -73,13 +73,14 @@ body {
     font-weight: bold;
 }
 #error {
+    width: 95%;
     float: left;
-    margin-left: 9%;
     font-size: 13px;
     letter-spacing: 1px;
     margin-top: 5px;
     color: crimson;
     display: none;
+    text-align: center;
 }
 
 .login-wrapper {

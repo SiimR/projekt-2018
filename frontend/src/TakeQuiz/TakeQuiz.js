@@ -36,6 +36,11 @@ export default class TakeQuiz extends Component {
           document.getElementById("error").style.display = "block";
         }
       }).catch(error => {
+        if (error.response.data.message === "No message available") {
+          document.getElementById("error").innerHTML = "Quiz with entered ID doesn't exist!";
+        } else {
+          document.getElementById("error").innerHTML = error.response.data.message;
+        }
         document.getElementById("error").style.display = "block";
       })
   }

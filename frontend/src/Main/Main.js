@@ -81,7 +81,7 @@ export default class Main extends Component {
               Take a quiz
             </button>
             <button id="make" className={'make-quiz-button ' + this.state.quizMaker} onClick={this.changeView}>
-              Make a quiz
+              My quizzes
             </button>
           <div className="user-name">
             <span>{this.props.userData.name}</span>

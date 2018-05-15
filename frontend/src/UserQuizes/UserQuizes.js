@@ -67,6 +67,8 @@ export default class UserQuizes extends Component {
     axios.delete(url + quizId)
       .then(function (response) {
         console.log(response);
+        let row = document.getElementById("quiz-" + quizId);
+        row.parentNode.removeChild(row);
       }.bind(this))
       .catch(function (error) {
         console.log(error);
@@ -78,7 +80,7 @@ export default class UserQuizes extends Component {
     let userQuizes = [];
     for (let index = arrayQuizes.data.length - 1; index >= 0; index--) {
       userQuizes.push(
-        <tr key={"quiz-" + index}>
+        <tr key={"quiz-" + index} id={"quiz-" + arrayQuizes.data[index].id}>
           <td>{arrayQuizes.data[index].name}</td>
           <td>{arrayQuizes.data[index].reference}</td>
           <td>
