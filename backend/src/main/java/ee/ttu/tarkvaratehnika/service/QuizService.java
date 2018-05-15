@@ -95,8 +95,16 @@ public class QuizService {
 	
 	public Integer update(QuizModel model) {
 		QuizEntity entity = QUIZ_MODEL_TO_ENTITY.apply(model);
+		QuizEntity entityToUpdate = quizRepository.findById(model.getId());
 		
-		update(entity);
+		entityToUpdate.setName(entity.getName());
+		entityToUpdate.setReference(entity.getReference());
+		entityToUpdate.setDescription(entity.getDescription());
+		entityToUpdate.setModifiedDate(new Date());
+		entityToUpdate.setActive(entity.getActive());
+		entityToUpdate.setTimer(entity.getTimer());
+		
+		update(entityToUpdate);
 		
 		return entity.getQuizId();
 		
