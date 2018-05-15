@@ -135,7 +135,6 @@ export default class CreateQuiz extends Component {
 	sendDataToServer(survey) {
   		let url = 'http://localhost:8082/quizzifly/api/quizzes/';
   		if (this.props.quiz) {
-  			console.log("222222");
   			axios.put(url,
 	    		this.changeInitialJson(survey.data)
 	    	)
@@ -143,9 +142,9 @@ export default class CreateQuiz extends Component {
 		        ReactDOM.render(
 			  		<Main userData={this.props.userData} quizCreationFailed={3} />, document.getElementById("root"));
 		      }).catch(error => {
+		      	//this.displaySurvey();
 		      	console.log(this.changeInitialJson(survey.data));
-		        ReactDOM.render(
-			  		<Main userData={this.props.userData} quizCreationFailed={4} />, document.getElementById("root"));
+		        ReactDOM.render(<Main userData={this.props.userData} quizCreationFailed={4} />, document.getElementById("root"));
 		      }) 
   		} else {
   			axios.post(url,
@@ -156,8 +155,7 @@ export default class CreateQuiz extends Component {
 			  		<Main userData={this.props.userData} quizCreationFailed={2} />, document.getElementById("root"));
 		      }).catch(error => {
 		      	console.log(this.changeInitialJson(survey.data));
-		        ReactDOM.render(
-			  		<Main userData={this.props.userData} quizCreationFailed={1} />, document.getElementById("root"));
+		        ReactDOM.render(<Main userData={this.props.userData} quizCreationFailed={1} />, document.getElementById("root"));
 		      })  
   		}
 	    	
