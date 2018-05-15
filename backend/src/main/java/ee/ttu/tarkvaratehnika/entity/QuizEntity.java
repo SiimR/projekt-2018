@@ -47,4 +47,7 @@ public class QuizEntity {
 	@Column(name = "modified_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedDate;
+	
+	@Column(name = "active")
+	private Boolean active;
 }

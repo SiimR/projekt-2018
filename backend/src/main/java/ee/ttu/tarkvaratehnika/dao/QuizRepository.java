@@ -21,10 +21,26 @@ public class QuizRepository {
 		return (Integer) sessionFactory.getCurrentSession().save(quiz);
 	}
 	
+	public void update(QuizEntity quiz) {
+		sessionFactory.getCurrentSession().update(quiz);
+	}
+	
+	public void delete(QuizEntity quiz) {
+		sessionFactory.getCurrentSession().delete(quiz);
+	}
+	
 	public QuizEntity findByReference(String reference) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(QuizEntity.class);
 		
 		criteria.add(Restrictions.eq("reference", reference));
+		
+		return (QuizEntity) criteria.uniqueResult();
+	}
+	
+	public QuizEntity findById(Integer quizId) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(QuizEntity.class);
+		
+		criteria.add(Restrictions.eq("quizId", quizId));
 		
 		return (QuizEntity) criteria.uniqueResult();
 	}
