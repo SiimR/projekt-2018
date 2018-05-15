@@ -36,6 +36,7 @@ public class QuizService {
 				.description(entity.getDescription())
 				.creationDate(entity.getCreationDate())
 				.modifiedDate(entity.getModifiedDate())
+				.active(entity.getActive())
 				.questions(entity.getQuestions().stream()
 						.map(QUESTION_ENTITY_TO_MODEL)
 						.collect(toList()))
@@ -53,6 +54,7 @@ public class QuizService {
 				.description(model.getDescription())
 				.creationDate(new Date())
 				.modifiedDate(new Date())
+				.active(model.getActive())
 				.questions(model.getQuestions().stream()
 						.map(QUESTION_MODEL_TO_ENTITY)
 						.collect(toList()))
@@ -64,6 +66,10 @@ public class QuizService {
 	
 	public QuizModel findByReference(String reference) {
 		QuizEntity quizEntity = quizRepository.findByReference(reference);
+		
+		if (!quizEntity.getActive()) {
+			throw new RuntimeException("This quiz is inactive at the moment.");
+		}
 		
 		return QUIZ_ENTITY_TO_MODEL.apply(quizEntity);
 	}
@@ -83,6 +89,37 @@ public class QuizService {
 		prepareValidEntity(entity);
 		
 		return quizRepository.save(entity);
+	}
+	
+	public Integer update(QuizModel model) {
+		QuizEntity entity = QUIZ_MODEL_TO_ENTITY.apply(model);
+		
+		update(entity);
+		
+		return entity.getQuizId();
+		
+	}
+	
+	public Integer activate(Integer quizId) {
+		QuizEntity entity = quizRepository.findById(quizId);
+		
+		entity.setActive(true);
+		update(entity);
+		
+		return quizId;
+	}
+	
+	public Integer deactivate(Integer quizId) {
+		QuizEntity entity = quizRepository.findById(quizId);
+		
+		entity.setActive(false);
+		update(entity);
+		
+		return quizId;
+	}
+	
+	private void update(QuizEntity entity) {
+		quizRepository.update(entity);
 	}
 	
 	private void prepareValidEntity(QuizEntity entity) {
