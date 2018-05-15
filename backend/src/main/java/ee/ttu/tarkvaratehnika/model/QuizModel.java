@@ -26,5 +26,6 @@ public class QuizModel {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
 	private Date modifiedDate;
 	private Boolean active;
+	private Integer timer;
 	private List<QuestionModel> questions;
 }

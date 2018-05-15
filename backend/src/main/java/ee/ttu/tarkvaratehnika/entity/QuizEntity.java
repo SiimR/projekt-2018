@@ -50,4 +50,7 @@ public class QuizEntity {
 	
 	@Column(name = "active")
 	private Boolean active;
+	
+	@Column(name = "timer")
+	private Integer timer;
 }

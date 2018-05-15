@@ -67,6 +67,8 @@ CREATE TABLE quizzy.quiz
 	name VARCHAR(255) NOT NULL,
 	reference VARCHAR(255) NOT NULL,
 	description VARCHAR,
+	active BOOLEAN NOT NULL DEFAULT TRUE,
+	timer INTEGER DEFAULT 0,
 	creation_date TIMESTAMP WITH TIME ZONE,
 	modified_date TIMESTAMP WITH TIME ZONE,
 	CONSTRAINT pk_quiz PRIMARY KEY(quiz_id),
