@@ -6,6 +6,7 @@ import Main from '../Main/Main.js';
 import Registration from '../Registration/Registration.js';
 import axios from 'axios';
 import md5 from 'md5';
+import UserActivation from '../UserActivation/UserActivation.js';
 
 export default class LogIn extends Component {
 
@@ -63,24 +64,14 @@ export default class LogIn extends Component {
 		errorElement.innerHTML = message;
 	}
 
-	displayActivationMessage() {
-		document.getElementById("log-in-error").innerHTML = "Your account has been activated!"
-		document.getElementById("log-in-error").classList.add("account-activation");
-	}
+	
 
 	accountActivation() {
 		const url = window.location.search;
 		const token = url.substring(url.indexOf('=') + 1);
 		if (url.indexOf("?token=") === 0) {
-			axios.post('http://localhost:8082/quizzifly/api/users/login', {
-				token: token,
-		  	})
-		  	.then(function (response) {
-		  		this.displayActivationMessage();
-		  	})
-	  		.catch(function (error) {
-		  		this.displayError("Account activation failed!");
-		  	}.bind(this));
+			ReactDOM.render(<UserActivation token={token} />, 
+		  		document.getElementById('inner-root'));
 		}
 	}
 
