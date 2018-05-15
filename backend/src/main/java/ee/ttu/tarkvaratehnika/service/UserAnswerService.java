@@ -1,5 +1,6 @@
 package ee.ttu.tarkvaratehnika.service;
 
+import java.util.Date;
 import java.util.function.Function;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class UserAnswerService {
 	
 	public Integer save(UserAnswerModel model) {
 		UserAnswerEntity entity = MODEL_TO_ENTITY.apply(model);
+		entity.setDateAnswered(new Date());
 		return userAnswerRepository.save(entity);
 	}
 	
