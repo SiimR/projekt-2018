@@ -24,7 +24,7 @@ public class QuestionEntity {
 	@SequenceGenerator(name = "quizzy.question_seq", sequenceName = "quizzy.question_seq")
 	private Integer questionId;
 	
-	@OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "question", orphanRemoval = true, cascade = CascadeType.PERSIST)
 	private List<AnswerEntity> answers;
 	
 	@ManyToOne()
