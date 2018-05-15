@@ -32,7 +32,7 @@ public class UserEntity {
 	@SequenceGenerator(name = "quizzy.user_seq", sequenceName = "quizzy.user_seq")
 	private Integer userId;
 	
-	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<QuizEntity> quizzes;
 	
 	@Column(name = "name")
