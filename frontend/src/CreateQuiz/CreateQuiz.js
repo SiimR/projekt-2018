@@ -133,17 +133,31 @@ export default class CreateQuiz extends Component {
 
 
 	sendDataToServer(survey) {
-		
+		console.log(this.changeInitialJson(survey.data));
   		let url = 'http://localhost:8082/quizzifly/api/quizzes/';
-	    axios.post(url,
-	    	this.changeInitialJson(survey.data)
-	    )
-	      .then(response => {
-	        ReactDOM.render(
-		  		<Main userData={this.props.userData} quizCreationFailed={2} />, document.getElementById("root"));
-	      }).catch(error => {
-	        console.log(error);
-	      })  	
+  		if (this.props.quiz) {
+  			console.log("222222");
+  			axios.put(url,
+	    		this.changeInitialJson(survey.data)
+	    	)
+		      .then(response => {
+		        ReactDOM.render(
+			  		<Main userData={this.props.userData} quizCreationFailed={2} />, document.getElementById("root"));
+		      }).catch(error => {
+		        console.log(error);
+		      }) 
+  		} else {
+  			axios.post(url,
+	    		this.changeInitialJson(survey.data)
+	    	)
+		      .then(response => {
+		        ReactDOM.render(
+			  		<Main userData={this.props.userData} quizCreationFailed={2} />, document.getElementById("root"));
+		      }).catch(error => {
+		        console.log(error);
+		      })  
+  		}
+	    	
 	}
 
 	changeInitialJson(initialJson) {
@@ -179,6 +193,7 @@ export default class CreateQuiz extends Component {
 		if(initialJson.overview[0]["timerCount"]) {
 			newJson["timer"] = initialJson.overview[0].timerCount;
 		}
+		console.log(newJson);
 		return newJson;
 	}
 
@@ -190,7 +205,7 @@ export default class CreateQuiz extends Component {
 		surveyJs.overview[0]["isActive"] = serverJson.active ? "Yes": "No";
 		surveyJs.overview[0]["quizTitle"] = serverJson.name;
 		surveyJs.overview[0]["quizReference"] = serverJson.reference;
-		if (serverJson["timer"]) {
+		if (serverJson["timer"] != 0) {
 			surveyJs.overview[0]["hasTimer"] = "Yes"
 			surveyJs.overview[0]["timerCount"] = serverJson.timer;
 		} else {
@@ -216,6 +231,7 @@ export default class CreateQuiz extends Component {
 	displaySurvey() {
 		let survey = new Survey.Model(this.state.surveyJSON);
 		if(this.props.quiz) {
+			console.log(this.props.quiz);
 			survey.data = this.editServerJson(this.props.quiz);
 		}
 		ReactDOM.render(
