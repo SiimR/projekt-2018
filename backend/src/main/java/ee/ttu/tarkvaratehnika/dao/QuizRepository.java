@@ -25,6 +25,10 @@ public class QuizRepository {
 		sessionFactory.getCurrentSession().update(quiz);
 	}
 	
+	public void delete(QuizEntity quiz) {
+		sessionFactory.getCurrentSession().delete(quiz);
+	}
+	
 	public QuizEntity findByReference(String reference) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(QuizEntity.class);
 		

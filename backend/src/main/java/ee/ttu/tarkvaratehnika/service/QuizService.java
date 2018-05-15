@@ -118,6 +118,13 @@ public class QuizService {
 		return quizId;
 	}
 	
+	public Integer delete(Integer quizId) {
+		QuizEntity entity = quizRepository.findById(quizId);
+		
+		quizRepository.delete(entity);
+		return quizId;
+	}
+	
 	private void update(QuizEntity entity) {
 		quizRepository.update(entity);
 	}
