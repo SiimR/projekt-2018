@@ -133,7 +133,8 @@ export default class CreateQuiz extends Component {
 
 
 	sendDataToServer(survey) {
-		console.log(survey.data);
+		console.log(survey);
+		console.log(this.changeInitialJson(survey.data));
   		let url = 'http://localhost:8082/quizzifly/api/quizzes/';
 	    axios.post(url,
 	    	this.changeInitialJson(survey.data)
@@ -184,7 +185,6 @@ export default class CreateQuiz extends Component {
 	}
 
 	editServerJson(serverJson) {
-		console.log(serverJson);
 		let surveyJs = {
 			"overview": [{}],
 			"QA": []
@@ -226,7 +226,6 @@ export default class CreateQuiz extends Component {
 	}
 		
 	componentDidMount() {
-		console.log(this.props.quiz);
 		this.displaySurvey();
 	}
 
