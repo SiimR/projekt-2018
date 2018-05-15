@@ -133,7 +133,6 @@ export default class CreateQuiz extends Component {
 
 
 	sendDataToServer(survey) {
-		console.log(this.changeInitialJson(survey.data));
   		let url = 'http://localhost:8082/quizzifly/api/quizzes/';
   		if (this.props.quiz) {
   			console.log("222222");
@@ -190,8 +189,11 @@ export default class CreateQuiz extends Component {
 		  "questions": arrayOfQuestions,
 		  "active" : initialJson.overview[0].isActive === "Yes" ? true : false
 		}
-		if(initialJson.overview[0]["timerCount"]) {
+		if (initialJson.overview[0]["timerCount"]) {
 			newJson["timer"] = initialJson.overview[0].timerCount;
+		}
+		if (this.props.quiz) {
+			newJson["id"] = this.props.quiz.id;
 		}
 		console.log(newJson);
 		return newJson;
@@ -231,7 +233,6 @@ export default class CreateQuiz extends Component {
 	displaySurvey() {
 		let survey = new Survey.Model(this.state.surveyJSON);
 		if(this.props.quiz) {
-			console.log(this.props.quiz);
 			survey.data = this.editServerJson(this.props.quiz);
 		}
 		ReactDOM.render(

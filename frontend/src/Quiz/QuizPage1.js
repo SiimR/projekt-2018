@@ -75,9 +75,10 @@ export default class QuizPage extends Component {
 
 	sendDataToServer(survey) {
     	document.getElementById("home-button").style.display = "block";
-  		let url = 'http://localhost:8082/quizzifly/api/quizzes/';
+  		let url = 'http://localhost:8082/quizzifly/api/userAnswers';
+  		let summary = this.makeSummary();
 	    axios.post(url, {
-          userSummary: 222,
+          summary,
       }).then(function (response) {
         this.displayResponseMessage("Results saved!", "green");
       })
@@ -100,7 +101,7 @@ export default class QuizPage extends Component {
 	  		document.getElementById("surveyElement"));
 	}
 
-	sendSummaryToServer() {
+	makeSummary() {
 		let summary = {
 			"total" : document.getElementById("total").innerHTML,
 			"correct" : document.getElementById("correct").innerHTML,
@@ -108,10 +109,10 @@ export default class QuizPage extends Component {
 			"quizReference" : this.props.quizRef
 		}
 		console.log(summary);
+		return summary;
 	}
 
 	home() {
-		this.sendSummaryToServer();
 	    ReactDOM.render(<Main userData={this.props.userData} />, 
 	      document.getElementById("root"));
   	}
