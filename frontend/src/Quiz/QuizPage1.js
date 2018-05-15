@@ -13,12 +13,12 @@ export default class QuizPage extends Component {
 	    this.state = {
 			    json: JSON.parse(this.props.data),
 			    surveyJSON: {
-		    title: this.props.quizName,
-		    showProgressBar: "bottom",
-		    startSurveyText: "Start Quiz",
-		    pages: [{}],
-		    completedHtml: "<h4>You have answered correctly <b>{correctedAnswers}</b> questions from <b>{questionCount}</b>.</h4>"
-		}
+				    title: this.props.quizName,
+				    showProgressBar: "bottom",
+				    startSurveyText: "Start Quiz",
+				    pages: [{}],
+				    completedHtml: "<h4>You have answered correctly <b>{correctedAnswers}</b> questions from <b>{questionCount}</b>.</h4>"
+				}
 		}
 		this.sendDataToServer = this.sendDataToServer.bind(this);
 
@@ -59,15 +59,17 @@ export default class QuizPage extends Component {
             };
             this.state.surveyJSON.pages.push(jsonQuestion);
         }
-        if (initialJson.hasOwnProperty("maxTimeToFinishPage")) {
+        if (initialJson.hasOwnProperty("timer")) {
         	let timerPage = {questions: [{
         			                    type: "html",
-        			                    html: "You have 10 seconds for every page and 35 seconds for the whole survey of 4 questions.<br/>Please click on <b>'Start Quiz'</b> button when you are ready."
+        			                    html: "You have " + initialJson.timer + " seconds for every page and  " + 
+        			                    initialJson.timer * (Object.keys(initialJson).length - 2)/3 + 
+        			                    " seconds for the whole survey of 4 questions.<br/>Please click on <b>'Start Quiz'</b> button when you are ready."
         			                }]};
 		    this.state.surveyJSON.pages.push(timerPage);
             this.state.surveyJSON["showTimerPanel"] = "bottom";
-            this.state.surveyJSON["maxTimeToFinishPage"] = initialJson.maxTimeToFinishPage;
-            this.state.surveyJSON["maxTimeToFinish"] = initialJson.maxTimeToFinishPage * (Object.keys(initialJson).length - 2)/3;
+            this.state.surveyJSON["maxTimeToFinishPage"] = initialJson.timer;
+            this.state.surveyJSON["maxTimeToFinish"] = initialJson.timer * (Object.keys(initialJson).length - 2)/3;
         }
 	}
 
@@ -92,7 +94,7 @@ export default class QuizPage extends Component {
   }
 
 	displaySurvey() {
-		let tere = this.modifyInitialJson(this.loadJsonFromServer())
+		this.modifyInitialJson(this.loadJsonFromServer())
 		let survey = new Survey.Model(this.state.surveyJSON);
 		ReactDOM.render(
 	  		<Survey.Survey model={survey} onComplete={this.sendDataToServer}/>,
