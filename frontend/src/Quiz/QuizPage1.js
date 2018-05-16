@@ -43,7 +43,7 @@ export default class QuizPage extends Component {
 		if (this.props.quizData.timer != 0) {
 			timingJson["timer"] = this.props.quizData.timer;
 		}
-		console.log(timingJson);
+
 		return timingJson;
 	}
 
@@ -88,10 +88,8 @@ export default class QuizPage extends Component {
 	sendSummaryToServer(summary) {
 		axios.post('http://localhost:8082/quizzifly/api/userAnswers', summary
       ).then(function (response) {
-      	console.log("Jah sain");
       })
       .catch(function (error) {
-      	console.log(error);
       }.bind(this));
 	}
 

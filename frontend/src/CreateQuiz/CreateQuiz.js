@@ -142,7 +142,6 @@ export default class CreateQuiz extends Component {
 		        ReactDOM.render(
 			  		<Main userData={this.props.userData} quizCreationFailed={3} />, document.getElementById("root"));
 		      }).catch(error => {
-		      	console.log(error.response.data);
 		       ReactDOM.render(<Main userData={this.props.userData} quizCreationFailed={4} />, document.getElementById("root"));
 		      }) 
   		} else {
@@ -153,7 +152,6 @@ export default class CreateQuiz extends Component {
 		        ReactDOM.render(
 			  		<Main userData={this.props.userData} quizCreationFailed={2} />, document.getElementById("root"));
 		      }).catch(error => {
-		      	console.log(error.response.data);
 		        ReactDOM.render(<Main userData={this.props.userData} quizCreationFailed={1} />, document.getElementById("root"));
 		      })  
   		}
@@ -196,14 +194,7 @@ export default class CreateQuiz extends Component {
 		if (this.props.quiz) {
 			newJson["id"] = this.props.quiz.id;
 		}
-		console.log(newJson);
 		return newJson;
-	}
-
-	surveyValidateQuestion(s, options) {
-	    if (options.name == 'correctAnswer') {
-	        console.log(options.value);
-	    }
 	}
 
 	editServerJson(serverJson) {
@@ -243,7 +234,7 @@ export default class CreateQuiz extends Component {
 			survey.data = this.editServerJson(this.props.quiz);
 		}
 		ReactDOM.render(
-	  		<Survey.Survey model={survey} onComplete={this.sendDataToServer} onValidateQuestion={this.surveyValidateQuestion}/>,
+	  		<Survey.Survey model={survey} onComplete={this.sendDataToServer} />,
 	  		document.getElementById("surveyElement"));
 	}
 		

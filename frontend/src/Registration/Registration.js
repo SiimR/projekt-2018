@@ -67,7 +67,7 @@ export default class Registration extends Component {
 		    ReactDOM.render(<LogIn />, document.getElementById('root'));
 		  })
 		  .catch(function (error) {
-		  	this.updateErrorMessage("Something went wrong... Account not registerd!");
+		  	this.updateErrorMessage(error.response.data.message);
 		  }.bind(this));
   	}
 

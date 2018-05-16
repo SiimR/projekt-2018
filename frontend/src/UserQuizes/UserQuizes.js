@@ -23,7 +23,7 @@ export default class UserQuizes extends Component {
         this.setState({listOfUserQuizes: responseData.data});
       }.bind(this))
       .catch(function (error) {
-        //this.displayError("Wrong username or password!");
+        this.displayError("No quizes found!", "crimson");
       }.bind(this));
     }
 
@@ -43,7 +43,6 @@ export default class UserQuizes extends Component {
       elem.target.src = require('../UserQuizes/unactive.png');
       axios.put(url + 'deactivate/' + elem.target.className)
       .then(function (response) {
-        console.log(response);
       }.bind(this))
       .catch(function (error) {
         console.log(error);
@@ -53,7 +52,6 @@ export default class UserQuizes extends Component {
       elem.target.src = require('../UserQuizes/active.png');
       axios.put(url + 'activate/' + elem.target.className)
       .then(function (response) {
-        console.log(response);
       }.bind(this))
       .catch(function (error) {
         console.log(error);
@@ -101,22 +99,22 @@ export default class UserQuizes extends Component {
     ReactDOM.render(<CreateQuiz userData={this.props.userData} />, document.getElementById('root'));
   }
 
-  displayQuizCreationNotification() {
+  displayError(message, color) {
     const notificationElement = document.getElementById("quiz-creation-notification");
+    notificationElement.innerHTML = message;
+    notificationElement.style.display = "block";
+    notificationElement.style.color = color;
+  }
+
+  displayQuizCreationNotification() {
     if (this.props.quizCreationFailed === 1) {
-      notificationElement.innerHTML = "Quiz creation failed!";
-      notificationElement.style.display = "block";
-      notificationElement.style.color = "crimson";
+      this.displayError("Quiz creation failed!", "crimson");
     } else if (this.props.quizCreationFailed === 2) {
-      notificationElement.innerHTML = "Quiz created!";
-      notificationElement.style.display = "block";
+      this.displayError("Quiz created!", "green");
     } else if (this.props.quizCreationFailed === 3) {
-      notificationElement.innerHTML = "Quiz modified!";
-      notificationElement.style.display = "block";
+      this.displayError("Quiz modified!", "green");
     } else if (this.props.quizCreationFailed === 4) {
-      notificationElement.innerHTML = "Quiz not modified!";
-      notificationElement.style.display = "block";
-      notificationElement.style.color = "crimson";
+      this.displayError("Quiz not modified!", "crimson");
     }
   }
 

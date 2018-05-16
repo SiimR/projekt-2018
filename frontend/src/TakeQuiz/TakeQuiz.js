@@ -24,7 +24,6 @@ export default class TakeQuiz extends Component {
     let url = 'http://localhost:8082/quizzifly/api/quizzes/' + this.state.value;
     axios.get(url)
       .then(response => {
-        console.log(response.data.reference);
         if (response.data["name"]) {
           const recivedData = JSON.stringify(response.data["questions"]);
           const quizName = response.data["name"];
@@ -36,6 +35,8 @@ export default class TakeQuiz extends Component {
       }).catch(error => {
         if (error.response.data.message === "No message available") {
           document.getElementById("error").innerHTML = "Quiz with entered ID doesn't exist!";
+        } else if (error.response.data.message === "Required Integer parameter 'userId' is not present") {
+          document.getElementById("error").innerHTML = "Enter quiz ID!";
         } else {
           document.getElementById("error").innerHTML = error.response.data.message;
         }

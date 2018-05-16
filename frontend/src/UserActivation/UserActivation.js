@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import './UserActivation.css';
 import axios from 'axios';
 
