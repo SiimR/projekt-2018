@@ -48,7 +48,7 @@ export default class QuizPage extends Component {
 	}
 
 	modifyInitialJson(initialJson) {
-        if (initialJson.hasOwnProperty("timer")) {
+        if (initialJson["timer"] && initialJson["timer"] != 0) {
         	let timerPage = {questions: [{
         			                    type: "html",
         			                    html: "You have " + initialJson.timer + " seconds for every page and  " + 
