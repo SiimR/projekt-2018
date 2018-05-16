@@ -1,0 +1,28 @@
+#message {
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+    letter-spacing: 1px;
+    color: grey;
+    font-size: 18px;
+    margin-top: 10%;
+}
+
+#home-button {
+	margin-left: 46%;
+	float: left;
+    margin-top: 7%;
+    padding: 10px 20px 10px 20px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    border-radius: 4px;
+    background-color: #ffffffff;
+    color: #68b0ff;
+    border: 1px solid #68b0ff;
+    display: none;
+}
+
+#home-button:hover {
+	background-color: #e9f0ff;
+	cursor: pointer;
+}

@@ -24,7 +24,7 @@ public class QuizEntity {
 	@SequenceGenerator(name = "quizzy.quiz_seq", sequenceName = "quizzy.quiz_seq")
 	private Integer quizId;
 	
-	@OneToMany(mappedBy = "quiz", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "quiz", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<QuestionEntity> questions;
 	
 	@ManyToOne()
@@ -47,4 +47,10 @@ public class QuizEntity {
 	@Column(name = "modified_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedDate;
+	
+	@Column(name = "active")
+	private Boolean active;
+	
+	@Column(name = "timer")
+	private Integer timer;
 }

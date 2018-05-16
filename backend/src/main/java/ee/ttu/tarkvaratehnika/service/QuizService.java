@@ -36,6 +36,8 @@ public class QuizService {
 				.description(entity.getDescription())
 				.creationDate(entity.getCreationDate())
 				.modifiedDate(entity.getModifiedDate())
+				.active(entity.getActive())
+				.timer(entity.getTimer())
 				.questions(entity.getQuestions().stream()
 						.map(QUESTION_ENTITY_TO_MODEL)
 						.collect(toList()))
@@ -48,11 +50,13 @@ public class QuizService {
 		}
 		
 		return QuizEntity.builder()
-				.name(model.getReference())
+				.name(model.getName())
 				.reference(model.getReference())
 				.description(model.getDescription())
 				.creationDate(new Date())
 				.modifiedDate(new Date())
+				.active(model.getActive())
+				.timer(model.getTimer())
 				.questions(model.getQuestions().stream()
 						.map(QUESTION_MODEL_TO_ENTITY)
 						.collect(toList()))
@@ -64,6 +68,10 @@ public class QuizService {
 	
 	public QuizModel findByReference(String reference) {
 		QuizEntity quizEntity = quizRepository.findByReference(reference);
+		
+		if (!quizEntity.getActive()) {
+			throw new RuntimeException("This quiz is inactive at the moment.");
+		}
 		
 		return QUIZ_ENTITY_TO_MODEL.apply(quizEntity);
 	}
@@ -83,6 +91,56 @@ public class QuizService {
 		prepareValidEntity(entity);
 		
 		return quizRepository.save(entity);
+	}
+	
+	public Integer update(QuizModel model) {
+		QuizEntity entity = QUIZ_MODEL_TO_ENTITY.apply(model);
+		QuizEntity entityToUpdate = quizRepository.findById(model.getId());
+		
+		entityToUpdate.setName(entity.getName());
+		entityToUpdate.setReference(entity.getReference());
+		entityToUpdate.setDescription(entity.getDescription());
+		entityToUpdate.setModifiedDate(new Date());
+		entityToUpdate.setActive(entity.getActive());
+		entityToUpdate.setTimer(entity.getTimer());
+		entityToUpdate.getQuestions().clear();
+		entityToUpdate.getQuestions().addAll(entity.getQuestions());
+		
+		prepareValidEntity(entityToUpdate);
+		
+		update(entityToUpdate);
+		
+		return entity.getQuizId();
+		
+	}
+	
+	public Integer activate(Integer quizId) {
+		QuizEntity entity = quizRepository.findById(quizId);
+		
+		entity.setActive(true);
+		update(entity);
+		
+		return quizId;
+	}
+	
+	public Integer deactivate(Integer quizId) {
+		QuizEntity entity = quizRepository.findById(quizId);
+		
+		entity.setActive(false);
+		update(entity);
+		
+		return quizId;
+	}
+	
+	public Integer delete(Integer quizId) {
+		QuizEntity entity = quizRepository.findById(quizId);
+		
+		quizRepository.delete(entity);
+		return quizId;
+	}
+	
+	private void update(QuizEntity entity) {
+		quizRepository.update(entity);
 	}
 	
 	private void prepareValidEntity(QuizEntity entity) {

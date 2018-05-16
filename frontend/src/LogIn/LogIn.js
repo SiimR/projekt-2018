@@ -6,6 +6,7 @@ import Main from '../Main/Main.js';
 import Registration from '../Registration/Registration.js';
 import axios from 'axios';
 import md5 from 'md5';
+import UserActivation from '../UserActivation/UserActivation.js';
 
 export default class LogIn extends Component {
 
@@ -55,8 +56,27 @@ export default class LogIn extends Component {
 	}
 
 	displayError(message) {
-		document.getElementById("log-in-error").style.display = "block";
-		document.getElementById("log-in-error").innerHTML = message;
+		const errorElement = document.getElementById("log-in-error");
+		if(errorElement.classList.contains("account-activation")) {
+			errorElement.classList.remove("account-activation");
+		}
+		errorElement.style.display = "block";
+		errorElement.innerHTML = message;
+	}
+
+	
+
+	accountActivation() {
+		const url = window.location.search;
+		const token = url.substring(url.indexOf('=') + 1);
+		if (url.indexOf("?token=") === 0) {
+			ReactDOM.render(<UserActivation token={token} />, 
+		  		document.getElementById('inner-root'));
+		}
+	}
+
+	componentDidMount() {
+		this.accountActivation();
 	}
 
 	render() {
@@ -65,14 +85,16 @@ export default class LogIn extends Component {
 	      	<link rel="stylesheet" type="text/css" href="LogIn/LogIn.css" />
 	        <h1 className="main-title up">QUIZZIFLY</h1>
 	        <p className="moto">Quizzes from people to people</p>
-	        <form className="search-form">
-	          <input type="text" name="login" onChange={this.handleChange} placeholder="Username" className="search-input" />
-	          <input type="password" name="login" onChange={this.handleChange} placeholder="Password" className="search-input" />
-	          <p id="log-in-error">Wrong username or password!</p>
-	          <input type="submit"  name="submit" onClick={this.handelLogIn} value="Log In" id="submit-button" />
-	        </form>
-	        <p className="create-account">Don't have an account?</p>
-	        <button className="register-button" onClick={this.registration} >Register account!</button>
+	        <div id="inner-root">
+		        <form className="search-form">
+		          <input type="text" name="login" onChange={this.handleChange} placeholder="Username" className="search-input" />
+		          <input type="password" name="login" onChange={this.handleChange} placeholder="Password" className="search-input" />
+		          <p id="log-in-error">Wrong username or password!</p>
+		          <input type="submit"  name="submit" onClick={this.handelLogIn} value="Log In" id="submit-button" />
+		        </form>
+		        <p className="create-account">Don't have an account?</p>
+		        <button className="register-button" onClick={this.registration} >Register account!</button>
+	        </div>
 	      </div>
 	    );
   	}

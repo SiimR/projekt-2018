@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import QuizPage from '../Quiz/QuizPage.js';
+import QuizPage from '../Quiz/QuizPage1.js';
 import axios from 'axios';
 
 
@@ -27,12 +27,19 @@ export default class TakeQuiz extends Component {
         if (response.data["name"]) {
           const recivedData = JSON.stringify(response.data["questions"]);
           const quizName = response.data["name"];
-          ReactDOM.render(<QuizPage data={recivedData} quizName={quizName} userData={this.props.userData} />,
+          ReactDOM.render(<QuizPage data={recivedData} quizData={response.data} quizName={quizName} userData={this.props.userData} quizRef={response.data.reference} />,
             document.getElementById('root'));
         } else {
           document.getElementById("error").style.display = "block";
         }
       }).catch(error => {
+        if (error.response.data.message === "No message available") {
+          document.getElementById("error").innerHTML = "Quiz with entered ID doesn't exist!";
+        } else if (error.response.data.message === "Required Integer parameter 'userId' is not present") {
+          document.getElementById("error").innerHTML = "Enter quiz ID!";
+        } else {
+          document.getElementById("error").innerHTML = error.response.data.message;
+        }
         document.getElementById("error").style.display = "block";
       })
   }

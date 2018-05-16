@@ -2,6 +2,7 @@ package ee.ttu.tarkvaratehnika.entity;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,7 +32,7 @@ public class UserEntity {
 	@SequenceGenerator(name = "quizzy.user_seq", sequenceName = "quizzy.user_seq")
 	private Integer userId;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<QuizEntity> quizzes;
 	
 	@Column(name = "name")

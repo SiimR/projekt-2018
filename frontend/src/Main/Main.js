@@ -55,7 +55,8 @@ export default class Main extends Component {
   }
 
   catchQuizCreationError() {
-    if (this.props.quizCreationFailed === 1 || this.props.quizCreationFailed === 2) {
+    if (this.props.quizCreationFailed === 1 || this.props.quizCreationFailed === 2 
+      || this.props.quizCreationFailed === 3|| this.props.quizCreationFailed === 4) {
       this.setState({quizMaker: 'quiz-transition-button'});
       this.setState({takeQuiz: ''});
     }
@@ -67,6 +68,14 @@ export default class Main extends Component {
     } else if (this.props.quizCreationFailed === 2) {
       ReactDOM.render(
         <UserQuizes userData={this.props.userData} quizCreationFailed={2} />,
+        document.getElementById('inner-root'));
+    } else if (this.props.quizCreationFailed === 3) {
+      ReactDOM.render(
+        <UserQuizes userData={this.props.userData} quizCreationFailed={3} />,
+        document.getElementById('inner-root'));
+    } else if (this.props.quizCreationFailed === 4) {
+      ReactDOM.render(
+        <UserQuizes userData={this.props.userData} quizCreationFailed={4} />,
         document.getElementById('inner-root'));
     }
   }
@@ -81,7 +90,7 @@ export default class Main extends Component {
               Take a quiz
             </button>
             <button id="make" className={'make-quiz-button ' + this.state.quizMaker} onClick={this.changeView}>
-              Make a quiz
+              My quizzes
             </button>
           <div className="user-name">
             <span>{this.props.userData.name}</span>
