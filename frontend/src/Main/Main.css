@@ -25,6 +25,7 @@ body {
     position: relative;
     top: 20px;
     font-family: 'Marmelad', sans-serif;
+    cursor: pointer;
 }
 .search-form {
     margin: 5% auto 0 auto;

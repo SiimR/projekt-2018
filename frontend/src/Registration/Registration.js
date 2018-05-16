@@ -75,7 +75,7 @@ export default class Registration extends Component {
 	    return (
 	      <div className="wrapper">
 	      <link rel="stylesheet" type="text/css" href="LogIn/LogIn.css" />
-	        <h1 className="main-title up">QUIZZIFLY</h1>
+	        <h1 className="main-title up" onClick={()=>{window.location.reload()}}>QUIZZIFLY</h1>
 	        <form className="search-form" onSubmit={this.registerAccount}>
 	        	<input type="text" name="quiz-id" placeholder="Username" className="search-input" onChange={this.handleChange} />
 	        	<input type="email" name="quiz-id" placeholder="Email" className="search-input" onChange={this.handleChange} />

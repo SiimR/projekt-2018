@@ -92,7 +92,7 @@ export default class CreateQuiz extends Component {
 				                        {
 				                            "type": "numeric",
 				                            "minValue": 1,
-				                            "maxValue": "{row.moreInfo.rowCount}"
+				                            "maxValue": parseInt("{row.moreInfo.rowCount}")
 				                        }
 				                    ]
 		                        }, {
@@ -142,9 +142,8 @@ export default class CreateQuiz extends Component {
 		        ReactDOM.render(
 			  		<Main userData={this.props.userData} quizCreationFailed={3} />, document.getElementById("root"));
 		      }).catch(error => {
-		      	//this.displaySurvey();
-		      	console.log(this.changeInitialJson(survey.data));
-		        ReactDOM.render(<Main userData={this.props.userData} quizCreationFailed={4} />, document.getElementById("root"));
+		      	console.log(error.response.data);
+		       ReactDOM.render(<Main userData={this.props.userData} quizCreationFailed={4} />, document.getElementById("root"));
 		      }) 
   		} else {
   			axios.post(url,
@@ -154,7 +153,7 @@ export default class CreateQuiz extends Component {
 		        ReactDOM.render(
 			  		<Main userData={this.props.userData} quizCreationFailed={2} />, document.getElementById("root"));
 		      }).catch(error => {
-		      	console.log(this.changeInitialJson(survey.data));
+		      	console.log(error.response.data);
 		        ReactDOM.render(<Main userData={this.props.userData} quizCreationFailed={1} />, document.getElementById("root"));
 		      })  
   		}
@@ -201,6 +200,12 @@ export default class CreateQuiz extends Component {
 		return newJson;
 	}
 
+	surveyValidateQuestion(s, options) {
+	    if (options.name == 'correctAnswer') {
+	        console.log(options.value);
+	    }
+	}
+
 	editServerJson(serverJson) {
 		let surveyJs = {
 			"overview": [{}],
@@ -238,7 +243,7 @@ export default class CreateQuiz extends Component {
 			survey.data = this.editServerJson(this.props.quiz);
 		}
 		ReactDOM.render(
-	  		<Survey.Survey model={survey} onComplete={this.sendDataToServer}/>,
+	  		<Survey.Survey model={survey} onComplete={this.sendDataToServer} onValidateQuestion={this.surveyValidateQuestion}/>,
 	  		document.getElementById("surveyElement"));
 	}
 		
